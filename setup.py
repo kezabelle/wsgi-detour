@@ -37,7 +37,7 @@ def make_readme(root_path):
             with open(filepath, mode="r", encoding="utf-8") as f:
                 yield f.read()
 
-
+LICENSE = "BSD License"
 URL = ""
 LONG_DESCRIPTION = "\r\n\r\n----\r\n\r\n".join(make_readme(HERE))
 SHORT_DESCRIPTION = ""
@@ -67,12 +67,12 @@ setup(
     cmdclass={"test": PyTest},
     zip_safe=False,
     keywords=" ".join(KEYWORDS),
-    license="BSD License",
+    license=LICENSE,
     url=URL,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: BSD License",
+        "License :: OSI Approved :: {}".format(LICENSE),
         "Natural Language :: English",
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
