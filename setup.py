@@ -42,7 +42,10 @@ URL = ""
 LONG_DESCRIPTION = "\r\n\r\n----\r\n\r\n".join(make_readme(HERE))
 SHORT_DESCRIPTION = ""
 KEYWORDS = (
-
+    "wsgi",
+    "redirect",
+    "middlware",
+    "wsgi-detour",
 )
 
 setup(
@@ -50,6 +53,8 @@ setup(
     version="0.1.0",
     author="Keryn Knight",
     author_email="python-wsgi-detour@kerynknight.com",
+    maintainer="Keryn Knight",
+    maintainer_email="python-wsgi-detour@kerynknight.com",
     description=SHORT_DESCRIPTION[0:200],
     long_description=LONG_DESCRIPTION,
     packages=[
@@ -59,6 +64,7 @@ setup(
     install_requires=[
     ],
     tests_require=[
+        "bottle>=0.12.13",
         "pytest>=2.6",
         "pytest-cov>=1.8",
         "pytest-remove-stale-bytecode>=1.0",
@@ -80,5 +86,7 @@ setup(
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Topic :: Internet :: WWW/HTTP :: WSGI",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware",
     ],
 )
