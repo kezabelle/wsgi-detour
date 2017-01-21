@@ -25,4 +25,4 @@ cdef class Detour:
     @cython.locals(path_info=str, script_name=str, entrypoints=list,
                    short_slice=str, short_check=str, long_slice=str,
                    long_check=str)
-    cpdef handle(self, environ, start_response)
+    cdef handle(self, environ, start_response)
