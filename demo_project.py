@@ -44,24 +44,24 @@ import detour
 
 def one_view(environ, start_response):
     setup_testing_defaults(environ)
-    start_response('200 OK', [('content-type', 'text/plain')])
-    return ('Hello world!',)
+    start_response('200 OK', [('content-type', 'text/html')])
+    return ('Hello world from wsgi-detour==%s' % detour.get_version(),)
 
 
 def another_view(environ, start_response):
     setup_testing_defaults(environ)
-    start_response('200 OK', [('content-type', 'text/plain')])
-    return ('Another view',)
+    start_response('200 OK', [('content-type', 'text/html')])
+    return ('Another view from wsgi-detour==%s' % detour.get_version(),)
 
 # ------------------------------------------------------------------------------
 # Now we set up a Bottle instance
 # ------------------------------------------------------------------------------
 bottle_app = Bottle()
-@bottle_app.route('/hello')
+@bottle_app.route('/')
 def bottle_hello_world():
     return u"this went to Bottle"
 
-@bottle_app.route('/goodbye/<var>')
+@bottle_app.route('/more/<var>')
 def bottle_goodbye_cruel_world(var):
     return u"%s also went to Bottle" % var
 
@@ -80,8 +80,14 @@ from django.conf.urls import url
 
 def django_hello_world(request):
     return HttpResponse(u"I'm from Django!")
+
+def django_goodbye_cruel_world(request, arg):
+    return HttpResponse(u"%s also went to Django" % arg)
+
+
 urlpatterns = (
     url('^$', django_hello_world),
+    url('^more/(?P<arg>.+?)$', django_goodbye_cruel_world),
 )
 django_app = get_wsgi_application()
 
@@ -91,8 +97,8 @@ django_app = get_wsgi_application()
 
 def fallback(environ, start_response):
     setup_testing_defaults(environ)
-    start_response('404 Not Found', [('content-type', 'text/plain')])
-    return ('Fallback!',)
+    start_response('404 Not Found', [('content-type', 'text/html')])
+    return ('Fallback from wsgi-detour==%s' % detour.get_version(),)
 
 # ------------------------------------------------------------------------------
 # Example Detour setup.
