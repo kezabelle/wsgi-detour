@@ -61,6 +61,11 @@ if SKIP_EXTENSIONS is False:
     extensions = [Extension("detour.__init__", ["detour/__init__" + ext])]
     if HAS_CYTHON:
         extensions = cythonize(extensions, force=True)
+        sys.stdout.write("Cython extension will be built\n")
+    else:
+        sys.stdout.write("C extension will be built\n")
+else:
+    sys.stdout.write("Pure python mode requested\n")
 
 setup(
     name="wsgi-detour",
@@ -79,7 +84,6 @@ setup(
     install_requires=[
     ],
     tests_require=[
-        "bottle>=0.12.13",
         "pytest>=2.6",
         "pytest-cov>=1.8",
         "pytest-remove-stale-bytecode>=1.0",

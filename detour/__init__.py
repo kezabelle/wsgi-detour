@@ -120,3 +120,10 @@ class Detour(object):
 
     def __call__(self, environ, start_response):
         return self.handle(environ, start_response)
+
+    def __repr__(self):
+        mounts = [(x.long_check, x.wsgi_app) for x in self.entrypoints]
+        return 'Detour(app=%(app)r, mounts=%(mounts)r)' % {
+            'app': self.app,
+            'mounts': mounts,
+        }

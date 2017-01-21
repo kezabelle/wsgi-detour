@@ -14,3 +14,15 @@ cache:
 
 script:
   - tox -e $TOX_ENV
+
+env:
+  - TOX_ENV=py27-cython
+  - TOX_ENV=py33-cython
+  - TOX_ENV=py35-cython
+  - TOX_ENV=py27-purec
+  - TOX_ENV=py33-purec
+  - TOX_ENV=py35-purec
+  - TOX_ENV=py27-purepy
+  - TOX_ENV=py33-purepy
+  - TOX_ENV=py35-purepy
+  - TOX_ENV=pypy
