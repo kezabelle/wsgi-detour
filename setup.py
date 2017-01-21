@@ -2,12 +2,18 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+
+from setuptools import Extension
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
 if sys.version_info[0] == 2:
     # get the Py3K compatible `encoding=` for opening files.
 	from io import open
-
+try:
+    from Cython.Build import cythonize
+    HAS_CYTHON = True
+except ImportError as e:
+    HAS_CYTHON = False
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -48,6 +54,11 @@ KEYWORDS = (
     "wsgi-detour",
 )
 
+ext = '.py' if HAS_CYTHON else '.c'
+extensions = [Extension("detour.__init__", ["detour/__init__" + ext])]
+if HAS_CYTHON:
+    extensions = cythonize(extensions)
+
 setup(
     name="wsgi-detour",
     version="0.1.0",
@@ -60,6 +71,7 @@ setup(
     packages=[
         "detour",
     ],
+    ext_modules=extensions,
     include_package_data=True,
     install_requires=[
     ],

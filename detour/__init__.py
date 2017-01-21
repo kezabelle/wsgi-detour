@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#cython: boundscheck=True, wraparound=False, embedsignature=True, always_allow_keywords=True
 from __future__ import absolute_import
 
 __version_info__ = '0.1.0'
