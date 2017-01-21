@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from __future__ import unicode_literals
 
 __version_info__ = '0.1.0'
 __version__ = '0.1.0'
@@ -27,10 +26,10 @@ class EntryPoint(object):
 
     def __repr__(self):
         'Return a nicely formatted representation string'
-        return 'EntryPoint(wsgi_app=%(wsgi_app)r, ' \
-               'short_check=%(short_check)r, long_check=%(long_check)r, ' \
-               'long_check_length=%(long_check_length)r, ' \
-               'continue_on_exceptions=%(continue_on_exceptions)r)' % {
+        return u'EntryPoint(wsgi_app=%(wsgi_app)r, ' \
+               u'short_check=%(short_check)r, long_check=%(long_check)r, ' \
+               u'long_check_length=%(long_check_length)r, ' \
+               u'continue_on_exceptions=%(continue_on_exceptions)r)' % {
                    'wsgi_app': self.wsgi_app,
                    'short_check': self.short_check,
                    'long_check': self.long_check,

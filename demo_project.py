@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
 import sys
 
 sys.dont_write_bytecode = True
@@ -45,11 +45,11 @@ def another_view(environ, start_response):
 bottle_app = Bottle()
 @bottle_app.route('/hello')
 def bottle_hello_world():
-    return "this went to Bottle"
+    return u"this went to Bottle"
 
 @bottle_app.route('/goodbye/<var>')
 def bottle_goodbye_cruel_world(var):
-    return "%s also went to Bottle" % var
+    return u"%s also went to Bottle" % var
 
 # ------------------------------------------------------------------------------
 # Now we set up a Django instance
@@ -65,7 +65,7 @@ from django.http import HttpResponse
 from django.conf.urls import url
 
 def django_hello_world(request):
-    return HttpResponse("I'm from Django!")
+    return HttpResponse(u"I'm from Django!")
 urlpatterns = (
     url('^$', django_hello_world),
 )
