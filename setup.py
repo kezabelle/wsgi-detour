@@ -54,10 +54,13 @@ KEYWORDS = (
     "wsgi-detour",
 )
 
-ext = '.py' if HAS_CYTHON else '.c'
-extensions = [Extension("detour.__init__", ["detour/__init__" + ext])]
-if HAS_CYTHON:
-    extensions = cythonize(extensions, force=True)
+SKIP_EXTENSIONS = bool(int(os.environ.get('DETOUR_SKIP_EXTENSIONS', 0)))
+extensions = ()
+if SKIP_EXTENSIONS is False:
+    ext = '.py' if HAS_CYTHON else '.c'
+    extensions = [Extension("detour.__init__", ["detour/__init__" + ext])]
+    if HAS_CYTHON:
+        extensions = cythonize(extensions, force=True)
 
 setup(
     name="wsgi-detour",
