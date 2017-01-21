@@ -98,7 +98,26 @@ django_app = get_wsgi_application()
 def fallback(environ, start_response):
     setup_testing_defaults(environ)
     start_response('404 Not Found', [('content-type', 'text/html')])
-    return ('Fallback from wsgi-detour==%s' % detour.get_version(),)
+    data = """
+    Fallback from wsgi-detour==%s
+    <ul>
+    <li><a href="/raw/one_view">raw WSGI</a></li>
+    <li><a href="/raw/another_view">a different raw WSGI</a></li>
+    <li><a href="/bottled/">a Bottle app</a>
+        <ul>
+            <li><a href="/bottled/more/yes">a Bottle view accepting an argument</a></li>
+            <li><a href="/bottled/nope">a Bottle error page</a></li>
+        </ul>
+    </li>
+    <li><a href="/django/">a Django app</a>
+        <ul>
+            <li><a href="/django/more/yes">a Django view accepting an argument</a></li>
+            <li><a href="/django/nope">a Django error page</a></li>
+        </ul>
+    </li>
+    </ul>
+    """ % detour.get_version()
+    return (data,)
 
 # ------------------------------------------------------------------------------
 # Example Detour setup.
