@@ -14,38 +14,31 @@ version = '0.1.0'
 VERSION = '0.1.0'
 
 def get_version():
-    return version  # pragma: no cover
-
-
-class DetourException(NotImplementedError):
-    pass
+    return version
 
 
 class EntryPoint(object):
-    __slots__ = ('wsgi_app', 'short_check', 'long_check', 'long_check_length', 'continue_on_exceptions')
+    __slots__ = ('wsgi_app', 'short_check', 'long_check', 'long_check_length')
 
-    def __init__(self, wsgi_app, short_check, long_check, long_check_length, continue_on_exceptions):
+    def __init__(self, wsgi_app, short_check, long_check, long_check_length):
         self.wsgi_app = wsgi_app
         self.short_check = short_check
         self.long_check = long_check
         self.long_check_length = long_check_length
-        self.continue_on_exceptions = continue_on_exceptions
 
     def __repr__(self):
         'Return a nicely formatted representation string'
         return u'EntryPoint(wsgi_app=%(wsgi_app)r, ' \
                u'short_check=%(short_check)r, long_check=%(long_check)r, ' \
-               u'long_check_length=%(long_check_length)r, ' \
-               u'continue_on_exceptions=%(continue_on_exceptions)r)' % {
+               u'long_check_length=%(long_check_length)r)' % {
                    'wsgi_app': self.wsgi_app,
                    'short_check': self.short_check,
                    'long_check': self.long_check,
                    'long_check_length': self.long_check_length,
-                   'continue_on_exceptions': self.continue_on_exceptions,
                }
 
 
-def prepare_entrypoint(position, prefix, handler, exceptions=(DetourException,)):
+def prepare_entrypoint(position, prefix, handler):
     short_check = prefix[:2]
     starts_with = short_check[:1]
     SLASH = "/"
@@ -70,8 +63,7 @@ def prepare_entrypoint(position, prefix, handler, exceptions=(DetourException,))
     long_check_length = len(prefix)
     return EntryPoint(wsgi_app=handler, short_check=short_check,
                       long_check=prefix,
-                      long_check_length=long_check_length,
-                      continue_on_exceptions=exceptions)
+                      long_check_length=long_check_length)
 
 
 def prepare_entrypoints(entrypoints):
