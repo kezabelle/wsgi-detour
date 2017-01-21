@@ -2,6 +2,12 @@
 #cython: boundscheck=True, wraparound=False, embedsignature=True, always_allow_keywords=True
 from __future__ import absolute_import
 
+# As far as I can tell, once an __init__.so exists, this file is basically
+# ignored ... because I've tried compiling it locally and then doing
+# raise ValueError("__init__.py loaded when __init__.so should have been loaded")
+# as suggested by http://stackoverflow.com/a/32067984
+# and the error never comes up.
+
 __version_info__ = '0.1.0'
 __version__ = '0.1.0'
 version = '0.1.0'
@@ -69,6 +75,7 @@ def prepare_entrypoint(position, prefix, handler, exceptions=(DetourException,))
 
 
 def prepare_entrypoints(entrypoints):
+    results = []
     for position, entrypoint_config in enumerate(entrypoints, start=1):
         if hasattr(entrypoint_config, 'keys') and callable(entrypoint_config.keys):
             mounter = prepare_entrypoint(position, **entrypoint_config)
@@ -82,7 +89,8 @@ def prepare_entrypoints(entrypoints):
                       }
                 raise ValueError(msg)
             mounter = prepare_entrypoint(position, *entrypoint_config)
-        yield mounter
+        results.append(mounter)
+    return results
 
 
 class Detour(object):
@@ -90,9 +98,9 @@ class Detour(object):
 
     def __init__(self, app, mounts):
         self.app = app
-        self.entrypoints = tuple(prepare_entrypoints(entrypoints=mounts))
+        self.entrypoints = prepare_entrypoints(entrypoints=mounts)
 
-    def __call__(self, environ, start_response):
+    def handle(self, environ, start_response):
         path_info = environ.get('PATH_INFO', '')
         script_name = environ.get('SCRIPT_NAME', '')
         entrypoints = self.entrypoints
@@ -117,3 +125,6 @@ class Detour(object):
         # Return the default WSGI publisher this is wrapping over.
         fallback = self.app
         return fallback(environ, start_response)
+
+    def __call__(self, environ, start_response):
+        return self.handle(environ, start_response)
