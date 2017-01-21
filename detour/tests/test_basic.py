@@ -33,6 +33,7 @@ def test_informative_error_if_missing_slash_at_start():
                     "for handler: None"
     assert error_message in exc.value
 
+
 def test_informative_error_if_trying_to_mount_at_root():
     apps = [
         ('/', None),
@@ -43,3 +44,23 @@ def test_informative_error_if_trying_to_mount_at_root():
                     "supported. The fallback WSGI application should be " \
                     "handling these requests."
     assert error_message in exc.value
+
+
+@pytest.mark.parametrize("entry_point_config", [
+    ('/wheee', None),
+    {'prefix': '/wheee', 'handler': None}
+])
+def test_building_entrypoints_ok(entry_point_config):
+    apps = [
+        entry_point_config,
+    ]
+    app = Detour(None, apps)
+    assert app.app is None
+    assert len(app.entrypoints) == 1
+    ep = app.entrypoints[0]
+    assert ep.short_check == '/w'
+    assert ep.long_check == '/wheee'
+    assert ep.long_check_length == len('/wheee')
+    assert ep.long_check_length == 6
+    ep_repr = "EntryPoint(wsgi_app=None, short_check='/w', long_check='/wheee', long_check_length=6)"
+    assert repr(ep) == ep_repr
