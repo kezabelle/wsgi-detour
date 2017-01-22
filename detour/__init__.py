@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#cython: boundscheck=True, wraparound=False, embedsignature=True, always_allow_keywords=True
+#cython: language_level=3, boundscheck=True, wraparound=False, embedsignature=True, always_allow_keywords=True
 from __future__ import absolute_import
 
 # As far as I can tell, once an __init__.so exists, this file is basically
@@ -93,8 +93,8 @@ class Detour(object):
         self.entrypoints = prepare_entrypoints(entrypoints=mounts)
 
     def handle(self, environ, start_response):
-        path_info = environ.get('PATH_INFO', '')
-        script_name = environ.get('SCRIPT_NAME', '')
+        path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
+        script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
         entrypoints = self.entrypoints
         for mount_entry in entrypoints:
             # Grab first N chars of URL to compare

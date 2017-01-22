@@ -2,7 +2,7 @@
 
 /* BEGIN: Cython Metadata
 {
-    "distutils": {}, 
+    "distutils": {},
     "module_name": "detour.__init__"
 }
 END: Cython Metadata */
@@ -422,8 +422,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #define __Pyx_PyNumber_Divide(x,y)         PyNumber_TrueDivide(x,y)
   #define __Pyx_PyNumber_InPlaceDivide(x,y)  PyNumber_InPlaceTrueDivide(x,y)
 #else
-  #define __Pyx_PyNumber_Divide(x,y)         PyNumber_Divide(x,y)
-  #define __Pyx_PyNumber_InPlaceDivide(x,y)  PyNumber_InPlaceDivide(x,y)
+  #define __Pyx_PyNumber_Divide(x,y)         PyNumber_TrueDivide(x,y)
+  #define __Pyx_PyNumber_InPlaceDivide(x,y)  PyNumber_InPlaceTrueDivide(x,y)
 #endif
 
 #ifndef __PYX_EXTERN_C
@@ -644,7 +644,7 @@ struct __pyx_obj_6detour_8__init___Detour;
  * 
  * cdef class EntryPoint:             # <<<<<<<<<<<<<<
  *     cpdef public wsgi_app
- *     cpdef public str short_check  # should match prepare_entrypoint.short_check
+ *     cpdef public basestring short_check  # should match prepare_entrypoint.short_check
  */
 struct __pyx_obj_6detour_8__init___EntryPoint {
   PyObject_HEAD
@@ -794,13 +794,6 @@ static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int eq
 /* UnicodeEquals.proto */
 static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals);
 
-/* StrEquals.proto */
-#if PY_MAJOR_VERSION >= 3
-#define __Pyx_PyString_Equals __Pyx_PyUnicode_Equals
-#else
-#define __Pyx_PyString_Equals __Pyx_PyBytes_Equals
-#endif
-
 /* PyObjectCall.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
@@ -877,6 +870,10 @@ static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
 #else
 #define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
 #endif
+
+/* PyUnicode_Substring.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Substring(
+            PyObject* text, Py_ssize_t start, Py_ssize_t stop);
 
 /* PyFunctionFastCall.proto */
 #if CYTHON_FAST_PYCALL
@@ -1049,12 +1046,12 @@ static const char __pyx_k_0_1_0[] = "0.1.0";
 static const char __pyx_k_slots[] = "__slots__";
 static const char __pyx_k_start[] = "start";
 static const char __pyx_k_detour[] = "detour";
+static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_mounts[] = "mounts";
 static const char __pyx_k_prefix[] = "prefix";
 static const char __pyx_k_VERSION[] = "VERSION";
 static const char __pyx_k_environ[] = "environ";
 static const char __pyx_k_handler[] = "handler";
-static const char __pyx_k_replace[] = "replace";
 static const char __pyx_k_version[] = "version";
 static const char __pyx_k_position[] = "position";
 static const char __pyx_k_wsgi_app[] = "wsgi_app";
@@ -1062,6 +1059,7 @@ static const char __pyx_k_PATH_INFO[] = "PATH_INFO";
 static const char __pyx_k_enumerate[] = "enumerate";
 static const char __pyx_k_version_2[] = "__version__";
 static const char __pyx_k_ValueError[] = "ValueError";
+static const char __pyx_k_iso_8859_1[] = "iso-8859-1";
 static const char __pyx_k_long_check[] = "long_check";
 static const char __pyx_k_mountpoint[] = "mountpoint";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
@@ -1081,43 +1079,53 @@ static const char __pyx_k_EntryPoint_wsgi_app_wsgi_app_r_s[] = "EntryPoint(wsgi_
 static const char __pyx_k_Mount_Point_num_s_must_have_2_it[] = "Mount Point #%(num)s must have 2 items, a mountpoint like '/app', and a WSGI application instance. Example: ('/app1', MyAppHandler())";
 static const char __pyx_k_Mount_Point_num_s_must_start_wit[] = "Mount Point #%(num)s must start with a '%(prefix)s', got '%(mountpoint)s' for handler: %(handler)r";
 static const char __pyx_k_Mount_Point_num_s_tried_to_mount[] = "Mount Point #%(num)s tried to mount %(handler)r at root, which isn't supported. The fallback WSGI application should be handling these requests.";
-static PyObject *__pyx_kp_s_;
-static PyObject *__pyx_kp_s_0_1_0;
-static PyObject *__pyx_kp_s_Detour_app_app_r_mounts_mounts_r;
+static PyObject *__pyx_kp_u_;
+static PyObject *__pyx_kp_u_0_1_0;
+static PyObject *__pyx_kp_u_Detour_app_app_r_mounts_mounts_r;
 static PyObject *__pyx_kp_u_EntryPoint_wsgi_app_wsgi_app_r_s;
 static PyObject *__pyx_kp_u_Mount_Point_num_s_must_have_2_it;
 static PyObject *__pyx_kp_u_Mount_Point_num_s_must_start_wit;
 static PyObject *__pyx_kp_u_Mount_Point_num_s_tried_to_mount;
-static PyObject *__pyx_n_s_PATH_INFO;
-static PyObject *__pyx_n_s_SCRIPT_NAME;
+static PyObject *__pyx_n_u_PATH_INFO;
+static PyObject *__pyx_n_u_SCRIPT_NAME;
 static PyObject *__pyx_kp_s_Users_kez_Virtualenvs_wsgiremou;
 static PyObject *__pyx_n_s_VERSION;
 static PyObject *__pyx_n_s_ValueError;
-static PyObject *__pyx_kp_s__2;
+static PyObject *__pyx_kp_u__2;
 static PyObject *__pyx_n_s_app;
+static PyObject *__pyx_n_u_app;
 static PyObject *__pyx_n_u_detour;
 static PyObject *__pyx_n_s_detour___init;
+static PyObject *__pyx_n_s_encode;
 static PyObject *__pyx_n_s_entrypoints;
+static PyObject *__pyx_n_u_entrypoints;
 static PyObject *__pyx_n_s_enumerate;
 static PyObject *__pyx_n_s_environ;
 static PyObject *__pyx_n_s_get;
 static PyObject *__pyx_n_s_get_version;
 static PyObject *__pyx_n_s_handler;
+static PyObject *__pyx_n_u_handler;
+static PyObject *__pyx_kp_u_iso_8859_1;
 static PyObject *__pyx_n_s_keys;
+static PyObject *__pyx_n_u_keys;
 static PyObject *__pyx_n_s_long_check;
+static PyObject *__pyx_n_u_long_check;
 static PyObject *__pyx_n_s_long_check_length;
+static PyObject *__pyx_n_u_long_check_length;
 static PyObject *__pyx_n_s_main;
-static PyObject *__pyx_n_s_mountpoint;
+static PyObject *__pyx_n_u_mountpoint;
 static PyObject *__pyx_n_s_mounts;
-static PyObject *__pyx_n_s_num;
+static PyObject *__pyx_n_u_mounts;
+static PyObject *__pyx_n_u_num;
 static PyObject *__pyx_n_s_position;
 static PyObject *__pyx_n_s_prefix;
+static PyObject *__pyx_n_u_prefix;
 static PyObject *__pyx_n_s_prepare_entrypoint;
 static PyObject *__pyx_n_s_prepare_entrypoints;
 static PyObject *__pyx_n_s_pyx_vtable;
-static PyObject *__pyx_n_s_replace;
-static PyObject *__pyx_kp_s_s_s;
+static PyObject *__pyx_kp_u_s_s;
 static PyObject *__pyx_n_s_short_check;
+static PyObject *__pyx_n_u_short_check;
 static PyObject *__pyx_n_s_slots;
 static PyObject *__pyx_n_s_start;
 static PyObject *__pyx_n_s_start_response;
@@ -1126,6 +1134,7 @@ static PyObject *__pyx_n_s_version;
 static PyObject *__pyx_n_s_version_2;
 static PyObject *__pyx_n_s_version_info;
 static PyObject *__pyx_n_s_wsgi_app;
+static PyObject *__pyx_n_u_wsgi_app;
 static PyObject *__pyx_pf_6detour_8__init___get_version(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static int __pyx_pf_6detour_8__init___10EntryPoint___init__(struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_v_self, PyObject *__pyx_v_wsgi_app, PyObject *__pyx_v_short_check, PyObject *__pyx_v_long_check, PyObject *__pyx_v_long_check_length); /* proto */
 static PyObject *__pyx_pf_6detour_8__init___10EntryPoint_2__repr__(struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_v_self); /* proto */
@@ -1156,13 +1165,15 @@ static PyObject *__pyx_tp_new_6detour_8__init___Detour(PyTypeObject *t, PyObject
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__4;
+static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_tuple__6;
-static PyObject *__pyx_tuple__7;
+static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__11;
-static PyObject *__pyx_codeobj__5;
-static PyObject *__pyx_codeobj__8;
+static PyObject *__pyx_tuple__13;
+static PyObject *__pyx_codeobj__7;
 static PyObject *__pyx_codeobj__10;
+static PyObject *__pyx_codeobj__12;
 
 /* "detour/__init__.py":16
  * VERSION = '0.1.0'
@@ -1189,7 +1200,7 @@ static PyObject *__pyx_f_6detour_8__init___get_version(CYTHON_UNUSED int __pyx_s
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_version); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(PyString_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 17, __pyx_L1_error)
+  if (!(likely(__Pyx_PyBaseString_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", (PY_MAJOR_VERSION < 3 ? "basestring" : "str"), Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 17, __pyx_L1_error)
   __pyx_r = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
@@ -1215,7 +1226,7 @@ static PyObject *__pyx_f_6detour_8__init___get_version(CYTHON_UNUSED int __pyx_s
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6detour_8__init___1get_version(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6detour_8__init___get_version[] = "get_version() -> str";
+static char __pyx_doc_6detour_8__init___get_version[] = "get_version() -> basestring";
 static PyMethodDef __pyx_mdef_6detour_8__init___1get_version = {"get_version", (PyCFunction)__pyx_pw_6detour_8__init___1get_version, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6detour_8__init___get_version};
 static PyObject *__pyx_pw_6detour_8__init___1get_version(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_r = 0;
@@ -1365,7 +1376,7 @@ static int __pyx_pf_6detour_8__init___10EntryPoint___init__(struct __pyx_obj_6de
  *         self.long_check = long_check
  *         self.long_check_length = long_check_length
  */
-  if (!(likely(PyString_CheckExact(__pyx_v_short_check))||((__pyx_v_short_check) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_short_check)->tp_name), 0))) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (!(likely(__Pyx_PyBaseString_CheckExact(__pyx_v_short_check))||((__pyx_v_short_check) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", (PY_MAJOR_VERSION < 3 ? "basestring" : "str"), Py_TYPE(__pyx_v_short_check)->tp_name), 0))) __PYX_ERR(0, 25, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_short_check;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -1381,7 +1392,7 @@ static int __pyx_pf_6detour_8__init___10EntryPoint___init__(struct __pyx_obj_6de
  *         self.long_check_length = long_check_length
  * 
  */
-  if (!(likely(PyString_CheckExact(__pyx_v_long_check))||((__pyx_v_long_check) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_long_check)->tp_name), 0))) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (!(likely(__Pyx_PyBaseString_CheckExact(__pyx_v_long_check))||((__pyx_v_long_check) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", (PY_MAJOR_VERSION < 3 ? "basestring" : "str"), Py_TYPE(__pyx_v_long_check)->tp_name), 0))) __PYX_ERR(0, 26, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_long_check;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -1470,7 +1481,7 @@ static PyObject *__pyx_pf_6detour_8__init___10EntryPoint_2__repr__(struct __pyx_
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_wsgi_app, __pyx_v_self->wsgi_app) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_wsgi_app, __pyx_v_self->wsgi_app) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
 
   /* "detour/__init__.py":35
  *                u'long_check_length=%(long_check_length)r)' % {
@@ -1479,7 +1490,7 @@ static PyObject *__pyx_pf_6detour_8__init___10EntryPoint_2__repr__(struct __pyx_
  *                    'long_check': self.long_check,
  *                    'long_check_length': self.long_check_length,
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_short_check, __pyx_v_self->short_check) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_short_check, __pyx_v_self->short_check) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
 
   /* "detour/__init__.py":36
  *                    'wsgi_app': self.wsgi_app,
@@ -1488,7 +1499,7 @@ static PyObject *__pyx_pf_6detour_8__init___10EntryPoint_2__repr__(struct __pyx_
  *                    'long_check_length': self.long_check_length,
  *                }
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_long_check, __pyx_v_self->long_check) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_long_check, __pyx_v_self->long_check) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
 
   /* "detour/__init__.py":37
  *                    'short_check': self.short_check,
@@ -1499,7 +1510,7 @@ static PyObject *__pyx_pf_6detour_8__init___10EntryPoint_2__repr__(struct __pyx_
  */
   __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->long_check_length); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_long_check_length, __pyx_t_2) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_long_check_length, __pyx_t_2) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "detour/__init__.py":33
@@ -1540,8 +1551,8 @@ static PyObject *__pyx_pf_6detour_8__init___10EntryPoint_2__repr__(struct __pyx_
  * 
  * cdef class EntryPoint:
  *     cpdef public wsgi_app             # <<<<<<<<<<<<<<
- *     cpdef public str short_check  # should match prepare_entrypoint.short_check
- *     cpdef public str long_check  # should match prepare_entrypoint.prefix
+ *     cpdef public basestring short_check  # should match prepare_entrypoint.short_check
+ *     cpdef public basestring long_check  # should match prepare_entrypoint.prefix
  */
 
 /* Python wrapper */
@@ -1634,8 +1645,8 @@ static int __pyx_pf_6detour_8__init___10EntryPoint_8wsgi_app_4__del__(struct __p
 /* "detour/__init__.pxd":8
  * cdef class EntryPoint:
  *     cpdef public wsgi_app
- *     cpdef public str short_check  # should match prepare_entrypoint.short_check             # <<<<<<<<<<<<<<
- *     cpdef public str long_check  # should match prepare_entrypoint.prefix
+ *     cpdef public basestring short_check  # should match prepare_entrypoint.short_check             # <<<<<<<<<<<<<<
+ *     cpdef public basestring long_check  # should match prepare_entrypoint.prefix
  *     cpdef public int long_check_length  # should match prepare_entrypoint.long_check_length
  */
 
@@ -1686,7 +1697,7 @@ static int __pyx_pf_6detour_8__init___10EntryPoint_11short_check_2__set__(struct
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(PyString_CheckExact(__pyx_v_value))||((__pyx_v_value) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_value)->tp_name), 0))) __PYX_ERR(1, 8, __pyx_L1_error)
+  if (!(likely(__Pyx_PyBaseString_CheckExact(__pyx_v_value))||((__pyx_v_value) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", (PY_MAJOR_VERSION < 3 ? "basestring" : "str"), Py_TYPE(__pyx_v_value)->tp_name), 0))) __PYX_ERR(1, 8, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_value;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -1738,8 +1749,8 @@ static int __pyx_pf_6detour_8__init___10EntryPoint_11short_check_4__del__(struct
 
 /* "detour/__init__.pxd":9
  *     cpdef public wsgi_app
- *     cpdef public str short_check  # should match prepare_entrypoint.short_check
- *     cpdef public str long_check  # should match prepare_entrypoint.prefix             # <<<<<<<<<<<<<<
+ *     cpdef public basestring short_check  # should match prepare_entrypoint.short_check
+ *     cpdef public basestring long_check  # should match prepare_entrypoint.prefix             # <<<<<<<<<<<<<<
  *     cpdef public int long_check_length  # should match prepare_entrypoint.long_check_length
  * 
  */
@@ -1791,7 +1802,7 @@ static int __pyx_pf_6detour_8__init___10EntryPoint_10long_check_2__set__(struct 
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(PyString_CheckExact(__pyx_v_value))||((__pyx_v_value) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_value)->tp_name), 0))) __PYX_ERR(1, 9, __pyx_L1_error)
+  if (!(likely(__Pyx_PyBaseString_CheckExact(__pyx_v_value))||((__pyx_v_value) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", (PY_MAJOR_VERSION < 3 ? "basestring" : "str"), Py_TYPE(__pyx_v_value)->tp_name), 0))) __PYX_ERR(1, 9, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_value;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -1842,8 +1853,8 @@ static int __pyx_pf_6detour_8__init___10EntryPoint_10long_check_4__del__(struct 
 }
 
 /* "detour/__init__.pxd":10
- *     cpdef public str short_check  # should match prepare_entrypoint.short_check
- *     cpdef public str long_check  # should match prepare_entrypoint.prefix
+ *     cpdef public basestring short_check  # should match prepare_entrypoint.short_check
+ *     cpdef public basestring long_check  # should match prepare_entrypoint.prefix
  *     cpdef public int long_check_length  # should match prepare_entrypoint.long_check_length             # <<<<<<<<<<<<<<
  * 
  * 
@@ -1927,10 +1938,10 @@ static int __pyx_pf_6detour_8__init___10EntryPoint_17long_check_length_2__set__(
 
 static PyObject *__pyx_pw_6detour_8__init___3prepare_entrypoint(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___prepare_entrypoint(int __pyx_v_position, PyObject *__pyx_v_prefix, PyObject *__pyx_v_handler, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  PyObject *__pyx_v_short_check = 0;
   PyObject *__pyx_v_starts_with = 0;
-  PyObject *__pyx_v_SLASH = 0;
   int __pyx_v_long_check_length;
+  PyObject *__pyx_v_short_check = 0;
+  PyObject *__pyx_v_SLASH = 0;
   PyObject *__pyx_v_msg = NULL;
   struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1976,8 +1987,8 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
  *     if starts_with != SLASH:
  *         msg = u"Mount Point #%(num)s must start with a " \
  */
-  __Pyx_INCREF(__pyx_kp_s_);
-  __pyx_v_SLASH = __pyx_kp_s_;
+  __Pyx_INCREF(__pyx_kp_u_);
+  __pyx_v_SLASH = __pyx_kp_u_;
 
   /* "detour/__init__.py":45
  *     starts_with = short_check[:1]
@@ -1986,7 +1997,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
  *         msg = u"Mount Point #%(num)s must start with a " \
  *               u"'%(prefix)s', got '%(mountpoint)s' " \
  */
-  __pyx_t_2 = (__Pyx_PyString_Equals(__pyx_v_starts_with, __pyx_v_SLASH, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = (__Pyx_PyUnicode_Equals(__pyx_v_starts_with, __pyx_v_SLASH, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 45, __pyx_L1_error)
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
@@ -2001,7 +2012,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_position); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_num, __pyx_t_4) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_num, __pyx_t_4) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "detour/__init__.py":50
@@ -2011,7 +2022,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
  *                   'mountpoint': prefix,
  *                   'handler': handler,
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_prefix, __pyx_v_SLASH) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_prefix, __pyx_v_SLASH) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
 
     /* "detour/__init__.py":51
  *                   'num': position,
@@ -2020,7 +2031,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
  *                   'handler': handler,
  *               }
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_mountpoint, __pyx_v_prefix) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_mountpoint, __pyx_v_prefix) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
 
     /* "detour/__init__.py":52
  *                   'prefix': SLASH,
@@ -2029,7 +2040,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
  *               }
  *         raise ValueError(msg)
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_handler, __pyx_v_handler) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_handler, __pyx_v_handler) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
 
     /* "detour/__init__.py":48
  *         msg = u"Mount Point #%(num)s must start with a " \
@@ -2079,7 +2090,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
  *         msg = u"Mount Point #%(num)s tried to mount %(handler)r at root, " \
  *               u"which isn't supported. The fallback WSGI application " \
  */
-  __pyx_t_3 = (__Pyx_PyString_Equals(__pyx_v_short_check, __pyx_v_SLASH, Py_EQ)); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_3 = (__Pyx_PyUnicode_Equals(__pyx_v_short_check, __pyx_v_SLASH, Py_EQ)); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
@@ -2094,7 +2105,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_position); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_num, __pyx_t_4) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_num, __pyx_t_4) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
     /* "detour/__init__.py":60
@@ -2104,7 +2115,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
  *               }
  *         raise ValueError(msg)
  */
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_handler, __pyx_v_handler) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_handler, __pyx_v_handler) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
 
     /* "detour/__init__.py":58
  *         msg = u"Mount Point #%(num)s tried to mount %(handler)r at root, " \
@@ -2220,8 +2231,8 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
   __Pyx_AddTraceback("detour.__init__.prepare_entrypoint", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_short_check);
   __Pyx_XDECREF(__pyx_v_starts_with);
+  __Pyx_XDECREF(__pyx_v_short_check);
   __Pyx_XDECREF(__pyx_v_SLASH);
   __Pyx_XDECREF(__pyx_v_msg);
   __Pyx_XGIVEREF((PyObject *)__pyx_r);
@@ -2231,7 +2242,7 @@ static struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_f_6detour_8__init___
 
 /* Python wrapper */
 static PyObject *__pyx_pw_6detour_8__init___3prepare_entrypoint(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_6detour_8__init___2prepare_entrypoint[] = "prepare_entrypoint(int position, str prefix, handler) -> EntryPoint";
+static char __pyx_doc_6detour_8__init___2prepare_entrypoint[] = "prepare_entrypoint(int position, basestring prefix, handler) -> EntryPoint";
 static PyMethodDef __pyx_mdef_6detour_8__init___3prepare_entrypoint = {"prepare_entrypoint", (PyCFunction)__pyx_pw_6detour_8__init___3prepare_entrypoint, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6detour_8__init___2prepare_entrypoint};
 static PyObject *__pyx_pw_6detour_8__init___3prepare_entrypoint(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_position;
@@ -2291,7 +2302,7 @@ static PyObject *__pyx_pw_6detour_8__init___3prepare_entrypoint(PyObject *__pyx_
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_prefix), (&PyString_Type), 1, "prefix", 1))) __PYX_ERR(0, 41, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_prefix), (&PyBaseString_Type), 1, "prefix", 1))) __PYX_ERR(0, 41, __pyx_L1_error)
   __pyx_r = __pyx_pf_6detour_8__init___2prepare_entrypoint(__pyx_self, __pyx_v_position, __pyx_v_prefix, __pyx_v_handler);
 
   /* function exit code */
@@ -2336,9 +2347,9 @@ static PyObject *__pyx_pf_6detour_8__init___2prepare_entrypoint(CYTHON_UNUSED Py
 
 static PyObject *__pyx_pw_6detour_8__init___5prepare_entrypoints(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static PyObject *__pyx_f_6detour_8__init___prepare_entrypoints(PyObject *__pyx_v_entrypoints, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_v_entrypoint_config_length;
   int __pyx_v_position;
   PyObject *__pyx_v_results = 0;
-  int __pyx_v_entrypoint_config_length;
   PyObject *__pyx_v_entrypoint_config = NULL;
   struct __pyx_obj_6detour_8__init___EntryPoint *__pyx_v_mounter = NULL;
   PyObject *__pyx_v_msg = NULL;
@@ -2494,7 +2505,7 @@ static PyObject *__pyx_f_6detour_8__init___prepare_entrypoints(PyObject *__pyx_v
  *             mounter = prepare_entrypoint(position, **entrypoint_config)
  *         else:
  */
-    __pyx_t_11 = PyObject_HasAttr(__pyx_v_entrypoint_config, __pyx_n_s_keys); if (unlikely(__pyx_t_11 == -1)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_11 = PyObject_HasAttr(__pyx_v_entrypoint_config, __pyx_n_u_keys); if (unlikely(__pyx_t_11 == -1)) __PYX_ERR(0, 72, __pyx_L1_error)
     __pyx_t_12 = (__pyx_t_11 != 0);
     if (__pyx_t_12) {
     } else {
@@ -2588,7 +2599,7 @@ static PyObject *__pyx_f_6detour_8__init___prepare_entrypoints(PyObject *__pyx_v
         __Pyx_GOTREF(__pyx_t_7);
         __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_position); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 80, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_num, __pyx_t_6) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_num, __pyx_t_6) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
         /* "detour/__init__.py":79
@@ -2920,18 +2931,18 @@ static int __pyx_pf_6detour_8__init___6Detour___init__(struct __pyx_obj_6detour_
  *         self.entrypoints = prepare_entrypoints(entrypoints=mounts)
  * 
  *     def handle(self, environ, start_response):             # <<<<<<<<<<<<<<
- *         path_info = environ.get('PATH_INFO', '')
- *         script_name = environ.get('SCRIPT_NAME', '')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
  */
 
 static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6detour_8__init___Detour *__pyx_v_self, PyObject *__pyx_v_environ, PyObject *__pyx_v_start_response) {
-  PyObject *__pyx_v_entrypoints = 0;
-  PyObject *__pyx_v_long_slice = 0;
-  PyObject *__pyx_v_path_info = 0;
-  PyObject *__pyx_v_short_slice = 0;
-  PyObject *__pyx_v_short_check = 0;
-  PyObject *__pyx_v_long_check = 0;
   PyObject *__pyx_v_script_name = 0;
+  PyObject *__pyx_v_path_info = 0;
+  PyObject *__pyx_v_entrypoints = 0;
+  PyObject *__pyx_v_long_check = 0;
+  PyObject *__pyx_v_long_slice = 0;
+  PyObject *__pyx_v_short_check = 0;
+  PyObject *__pyx_v_short_slice = 0;
   PyObject *__pyx_v_mount_entry = NULL;
   PyObject *__pyx_v_wsgi_application = NULL;
   PyObject *__pyx_v_fallback = NULL;
@@ -2952,8 +2963,8 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   /* "detour/__init__.py":96
  * 
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '')             # <<<<<<<<<<<<<<
- *         script_name = environ.get('SCRIPT_NAME', '')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
  *         entrypoints = self.entrypoints
  */
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_environ, __pyx_n_s_get); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
@@ -2961,29 +2972,41 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(PyString_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_encode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (!(likely(PyUnicode_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 96, __pyx_L1_error)
   __pyx_v_path_info = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
   /* "detour/__init__.py":97
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '')
- *         script_name = environ.get('SCRIPT_NAME', '')             # <<<<<<<<<<<<<<
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_environ, __pyx_n_s_get); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(PyString_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(PyUnicode_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "unicode", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 97, __pyx_L1_error)
   __pyx_v_script_name = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "detour/__init__.py":98
- *         path_info = environ.get('PATH_INFO', '')
- *         script_name = environ.get('SCRIPT_NAME', '')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
  *         entrypoints = self.entrypoints             # <<<<<<<<<<<<<<
  *         for mount_entry in entrypoints:
  *             # Grab first N chars of URL to compare
@@ -2994,7 +3017,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   __pyx_t_1 = 0;
 
   /* "detour/__init__.py":99
- *         script_name = environ.get('SCRIPT_NAME', '')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:             # <<<<<<<<<<<<<<
  *             # Grab first N chars of URL to compare
@@ -3027,7 +3050,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(0, 101, __pyx_L1_error)
     }
-    __pyx_t_2 = PySequence_GetSlice(__pyx_v_path_info, 0, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 101, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyUnicode_Substring(__pyx_v_path_info, 0, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 101, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_XDECREF_SET(__pyx_v_short_slice, ((PyObject*)__pyx_t_2));
     __pyx_t_2 = 0;
@@ -3041,7 +3064,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  */
     __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_mount_entry, __pyx_n_s_short_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 102, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (!(likely(PyString_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 102, __pyx_L1_error)
+    if (!(likely(__Pyx_PyBaseString_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", (PY_MAJOR_VERSION < 3 ? "basestring" : "str"), Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 102, __pyx_L1_error)
     __Pyx_XDECREF_SET(__pyx_v_short_check, ((PyObject*)__pyx_t_2));
     __pyx_t_2 = 0;
 
@@ -3052,7 +3075,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  *                 # first N chars of URL/mount were correct, now do the
  *                 # full comparison for the mountpoint.
  */
-    __pyx_t_4 = (__Pyx_PyString_Equals(__pyx_v_short_slice, __pyx_v_short_check, Py_EQ)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 104, __pyx_L1_error)
+    __pyx_t_4 = (__Pyx_PyUnicode_Equals(__pyx_v_short_slice, __pyx_v_short_check, Py_EQ)); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 104, __pyx_L1_error)
     __pyx_t_5 = (__pyx_t_4 != 0);
     if (__pyx_t_5) {
 
@@ -3071,7 +3094,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_2); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = PySequence_GetSlice(__pyx_v_path_info, 0, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyUnicode_Substring(__pyx_v_path_info, 0, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_XDECREF_SET(__pyx_v_long_slice, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
@@ -3085,7 +3108,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  */
       __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_mount_entry, __pyx_n_s_long_check); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      if (!(likely(PyString_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 108, __pyx_L1_error)
+      if (!(likely(__Pyx_PyBaseString_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", (PY_MAJOR_VERSION < 3 ? "basestring" : "str"), Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 108, __pyx_L1_error)
       __Pyx_XDECREF_SET(__pyx_v_long_check, ((PyObject*)__pyx_t_2));
       __pyx_t_2 = 0;
 
@@ -3096,7 +3119,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  *                     # Rejig the environ dict's data and dispatch to the given
  *                     # WSGI publisher.
  */
-      __pyx_t_5 = (__Pyx_PyString_Equals(__pyx_v_long_slice, __pyx_v_long_check, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 110, __pyx_L1_error)
+      __pyx_t_5 = (__Pyx_PyUnicode_Equals(__pyx_v_long_slice, __pyx_v_long_check, Py_EQ)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 110, __pyx_L1_error)
       __pyx_t_4 = (__pyx_t_5 != 0);
       if (__pyx_t_4) {
 
@@ -3115,10 +3138,10 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
         __Pyx_INCREF(__pyx_v_long_check);
         __Pyx_GIVEREF(__pyx_v_long_check);
         PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_long_check);
-        __pyx_t_7 = __Pyx_PyString_Format(__pyx_kp_s_s_s, __pyx_t_2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 113, __pyx_L1_error)
+        __pyx_t_7 = PyUnicode_Format(__pyx_kp_u_s_s, __pyx_t_2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 113, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(PyObject_SetItem(__pyx_v_environ, __pyx_n_s_SCRIPT_NAME, __pyx_t_7) < 0)) __PYX_ERR(0, 113, __pyx_L1_error)
+        if (unlikely(PyObject_SetItem(__pyx_v_environ, __pyx_n_u_SCRIPT_NAME, __pyx_t_7) < 0)) __PYX_ERR(0, 113, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
         /* "detour/__init__.py":114
@@ -3128,54 +3151,13 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  *                     wsgi_application = mount_entry.wsgi_app
  *                     return wsgi_application(environ, start_response)
  */
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_path_info, __pyx_n_s_replace); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 114, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_8 = NULL;
-        __pyx_t_9 = 0;
-        if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-          __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_2);
-          if (likely(__pyx_t_8)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-            __Pyx_INCREF(__pyx_t_8);
-            __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_2, function);
-            __pyx_t_9 = 1;
-          }
+        if (unlikely(__pyx_v_path_info == Py_None)) {
+          PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "replace");
+          __PYX_ERR(0, 114, __pyx_L1_error)
         }
-        #if CYTHON_FAST_PYCALL
-        if (PyFunction_Check(__pyx_t_2)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_v_long_check, __pyx_kp_s__2};
-          __pyx_t_7 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 114, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __Pyx_GOTREF(__pyx_t_7);
-        } else
-        #endif
-        #if CYTHON_FAST_PYCCALL
-        if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_v_long_check, __pyx_kp_s__2};
-          __pyx_t_7 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 114, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __Pyx_GOTREF(__pyx_t_7);
-        } else
-        #endif
-        {
-          __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 114, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_10);
-          if (__pyx_t_8) {
-            __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
-          }
-          __Pyx_INCREF(__pyx_v_long_check);
-          __Pyx_GIVEREF(__pyx_v_long_check);
-          PyTuple_SET_ITEM(__pyx_t_10, 0+__pyx_t_9, __pyx_v_long_check);
-          __Pyx_INCREF(__pyx_kp_s__2);
-          __Pyx_GIVEREF(__pyx_kp_s__2);
-          PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, __pyx_kp_s__2);
-          __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_10, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 114, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_7);
-          __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        }
-        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(PyObject_SetItem(__pyx_v_environ, __pyx_n_s_PATH_INFO, __pyx_t_7) < 0)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __pyx_t_7 = PyUnicode_Replace(__pyx_v_path_info, __pyx_v_long_check, __pyx_kp_u__2, -1L); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 114, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        if (unlikely(PyObject_SetItem(__pyx_v_environ, __pyx_n_u_PATH_INFO, __pyx_t_7) < 0)) __PYX_ERR(0, 114, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
         /* "detour/__init__.py":115
@@ -3199,13 +3181,13 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  */
         __Pyx_XDECREF(__pyx_r);
         __Pyx_INCREF(__pyx_v_wsgi_application);
-        __pyx_t_2 = __pyx_v_wsgi_application; __pyx_t_10 = NULL;
+        __pyx_t_2 = __pyx_v_wsgi_application; __pyx_t_8 = NULL;
         __pyx_t_9 = 0;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-          __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_2);
-          if (likely(__pyx_t_10)) {
+          __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_2);
+          if (likely(__pyx_t_8)) {
             PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-            __Pyx_INCREF(__pyx_t_10);
+            __Pyx_INCREF(__pyx_t_8);
             __Pyx_INCREF(function);
             __Pyx_DECREF_SET(__pyx_t_2, function);
             __pyx_t_9 = 1;
@@ -3213,35 +3195,35 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
         }
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_2)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_v_environ, __pyx_v_start_response};
+          PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_v_environ, __pyx_v_start_response};
           __pyx_t_7 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 116, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_7);
         } else
         #endif
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_v_environ, __pyx_v_start_response};
+          PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_v_environ, __pyx_v_start_response};
           __pyx_t_7 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 116, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_7);
         } else
         #endif
         {
-          __pyx_t_8 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 116, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          if (__pyx_t_10) {
-            __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_10); __pyx_t_10 = NULL;
+          __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 116, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_10);
+          if (__pyx_t_8) {
+            __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
           }
           __Pyx_INCREF(__pyx_v_environ);
           __Pyx_GIVEREF(__pyx_v_environ);
-          PyTuple_SET_ITEM(__pyx_t_8, 0+__pyx_t_9, __pyx_v_environ);
+          PyTuple_SET_ITEM(__pyx_t_10, 0+__pyx_t_9, __pyx_v_environ);
           __Pyx_INCREF(__pyx_v_start_response);
           __Pyx_GIVEREF(__pyx_v_start_response);
-          PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_9, __pyx_v_start_response);
-          __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_8, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 116, __pyx_L1_error)
+          PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, __pyx_v_start_response);
+          __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_10, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 116, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+          __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         }
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __pyx_r = __pyx_t_7;
@@ -3268,7 +3250,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
     }
 
     /* "detour/__init__.py":99
- *         script_name = environ.get('SCRIPT_NAME', '')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:             # <<<<<<<<<<<<<<
  *             # Grab first N chars of URL to compare
@@ -3327,20 +3309,20 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 119, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_8);
+    __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_10);
     if (__pyx_t_2) {
-      __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2); __pyx_t_2 = NULL;
+      __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_2); __pyx_t_2 = NULL;
     }
     __Pyx_INCREF(__pyx_v_environ);
     __Pyx_GIVEREF(__pyx_v_environ);
-    PyTuple_SET_ITEM(__pyx_t_8, 0+__pyx_t_9, __pyx_v_environ);
+    PyTuple_SET_ITEM(__pyx_t_10, 0+__pyx_t_9, __pyx_v_environ);
     __Pyx_INCREF(__pyx_v_start_response);
     __Pyx_GIVEREF(__pyx_v_start_response);
-    PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_9, __pyx_v_start_response);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, __pyx_v_start_response);
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   }
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_r = __pyx_t_1;
@@ -3351,8 +3333,8 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  *         self.entrypoints = prepare_entrypoints(entrypoints=mounts)
  * 
  *     def handle(self, environ, start_response):             # <<<<<<<<<<<<<<
- *         path_info = environ.get('PATH_INFO', '')
- *         script_name = environ.get('SCRIPT_NAME', '')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
  */
 
   /* function exit code */
@@ -3365,13 +3347,13 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   __Pyx_AddTraceback("detour.__init__.Detour.handle", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_entrypoints);
-  __Pyx_XDECREF(__pyx_v_long_slice);
-  __Pyx_XDECREF(__pyx_v_path_info);
-  __Pyx_XDECREF(__pyx_v_short_slice);
-  __Pyx_XDECREF(__pyx_v_short_check);
-  __Pyx_XDECREF(__pyx_v_long_check);
   __Pyx_XDECREF(__pyx_v_script_name);
+  __Pyx_XDECREF(__pyx_v_path_info);
+  __Pyx_XDECREF(__pyx_v_entrypoints);
+  __Pyx_XDECREF(__pyx_v_long_check);
+  __Pyx_XDECREF(__pyx_v_long_slice);
+  __Pyx_XDECREF(__pyx_v_short_check);
+  __Pyx_XDECREF(__pyx_v_short_slice);
   __Pyx_XDECREF(__pyx_v_mount_entry);
   __Pyx_XDECREF(__pyx_v_wsgi_application);
   __Pyx_XDECREF(__pyx_v_fallback);
@@ -3508,7 +3490,6 @@ static PyObject *__pyx_pw_6detour_8__init___6Detour_5__repr__(PyObject *__pyx_v_
 
 static PyObject *__pyx_pf_6detour_8__init___6Detour_4__repr__(struct __pyx_obj_6detour_8__init___Detour *__pyx_v_self) {
   PyObject *__pyx_v_mounts = NULL;
-  PyObject *__pyx_v_x = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3526,39 +3507,48 @@ static PyObject *__pyx_pf_6detour_8__init___6Detour_4__repr__(struct __pyx_obj_6
  *         return 'Detour(app=%(app)r, mounts=%(mounts)r)' % {
  *             'app': self.app,
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (unlikely(__pyx_v_self->entrypoints == Py_None)) {
-    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 125, __pyx_L1_error)
-  }
-  __pyx_t_2 = __pyx_v_self->entrypoints; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
-  for (;;) {
-    if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_2)) break;
-    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 125, __pyx_L1_error)
-    #else
-    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    #endif
-    __Pyx_XDECREF_SET(__pyx_v_x, __pyx_t_4);
-    __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_long_check); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_wsgi_app); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __Pyx_GIVEREF(__pyx_t_4);
-    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_5);
-    __pyx_t_4 = 0;
-    __pyx_t_5 = 0;
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 125, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  { /* enter inner scope */
+    PyObject *__pyx_7genexpr__pyx_v_x = NULL;
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L5_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    if (unlikely(__pyx_v_self->entrypoints == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
+      __PYX_ERR(0, 125, __pyx_L5_error)
+    }
+    __pyx_t_2 = __pyx_v_self->entrypoints; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
+    for (;;) {
+      if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_2)) break;
+      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+      __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 125, __pyx_L5_error)
+      #else
+      __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      #endif
+      __Pyx_XDECREF_SET(__pyx_7genexpr__pyx_v_x, __pyx_t_4);
+      __pyx_t_4 = 0;
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_7genexpr__pyx_v_x, __pyx_n_s_long_check); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_7genexpr__pyx_v_x, __pyx_n_s_wsgi_app); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 125, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_GIVEREF(__pyx_t_4);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_5);
+      PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_5);
+      __pyx_t_4 = 0;
+      __pyx_t_5 = 0;
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 125, __pyx_L5_error)
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    }
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_XDECREF(__pyx_7genexpr__pyx_v_x);
+    goto __pyx_L8_exit_scope;
+    __pyx_L5_error:;
+    __Pyx_XDECREF(__pyx_7genexpr__pyx_v_x);
+    goto __pyx_L1_error;
+    __pyx_L8_exit_scope:;
+  } /* exit inner scope */
   __pyx_v_mounts = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
@@ -3580,7 +3570,7 @@ static PyObject *__pyx_pf_6detour_8__init___6Detour_4__repr__(struct __pyx_obj_6
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_app, __pyx_v_self->app) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_app, __pyx_v_self->app) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
 
   /* "detour/__init__.py":128
  *         return 'Detour(app=%(app)r, mounts=%(mounts)r)' % {
@@ -3588,7 +3578,7 @@ static PyObject *__pyx_pf_6detour_8__init___6Detour_4__repr__(struct __pyx_obj_6
  *             'mounts': mounts,             # <<<<<<<<<<<<<<
  *         }
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_mounts, __pyx_v_mounts) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_mounts, __pyx_v_mounts) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
 
   /* "detour/__init__.py":126
  *     def __repr__(self):
@@ -3597,7 +3587,7 @@ static PyObject *__pyx_pf_6detour_8__init___6Detour_4__repr__(struct __pyx_obj_6
  *             'app': self.app,
  *             'mounts': mounts,
  */
-  __pyx_t_2 = __Pyx_PyString_Format(__pyx_kp_s_Detour_app_app_r_mounts_mounts_r, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __pyx_t_2 = PyUnicode_Format(__pyx_kp_u_Detour_app_app_r_mounts_mounts_r, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
@@ -3623,7 +3613,6 @@ static PyObject *__pyx_pf_6detour_8__init___6Detour_4__repr__(struct __pyx_obj_6
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_mounts);
-  __Pyx_XDECREF(__pyx_v_x);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -3936,8 +3925,8 @@ static PyMethodDef __pyx_methods_6detour_8__init___EntryPoint[] = {
 
 static struct PyGetSetDef __pyx_getsets_6detour_8__init___EntryPoint[] = {
   {(char *)"wsgi_app", __pyx_getprop_6detour_8__init___10EntryPoint_wsgi_app, __pyx_setprop_6detour_8__init___10EntryPoint_wsgi_app, (char *)"wsgi_app: object", 0},
-  {(char *)"short_check", __pyx_getprop_6detour_8__init___10EntryPoint_short_check, __pyx_setprop_6detour_8__init___10EntryPoint_short_check, (char *)"short_check: str", 0},
-  {(char *)"long_check", __pyx_getprop_6detour_8__init___10EntryPoint_long_check, __pyx_setprop_6detour_8__init___10EntryPoint_long_check, (char *)"long_check: str", 0},
+  {(char *)"short_check", __pyx_getprop_6detour_8__init___10EntryPoint_short_check, __pyx_setprop_6detour_8__init___10EntryPoint_short_check, (char *)"short_check: basestring", 0},
+  {(char *)"long_check", __pyx_getprop_6detour_8__init___10EntryPoint_long_check, __pyx_setprop_6detour_8__init___10EntryPoint_long_check, (char *)"long_check: basestring", 0},
   {(char *)"long_check_length", __pyx_getprop_6detour_8__init___10EntryPoint_long_check_length, __pyx_setprop_6detour_8__init___10EntryPoint_long_check_length, (char *)"long_check_length: 'int'", 0},
   {0, 0, 0, 0, 0}
 };
@@ -4171,43 +4160,53 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_kp_s_, __pyx_k_, sizeof(__pyx_k_), 0, 0, 1, 0},
-  {&__pyx_kp_s_0_1_0, __pyx_k_0_1_0, sizeof(__pyx_k_0_1_0), 0, 0, 1, 0},
-  {&__pyx_kp_s_Detour_app_app_r_mounts_mounts_r, __pyx_k_Detour_app_app_r_mounts_mounts_r, sizeof(__pyx_k_Detour_app_app_r_mounts_mounts_r), 0, 0, 1, 0},
+  {&__pyx_kp_u_, __pyx_k_, sizeof(__pyx_k_), 0, 1, 0, 0},
+  {&__pyx_kp_u_0_1_0, __pyx_k_0_1_0, sizeof(__pyx_k_0_1_0), 0, 1, 0, 0},
+  {&__pyx_kp_u_Detour_app_app_r_mounts_mounts_r, __pyx_k_Detour_app_app_r_mounts_mounts_r, sizeof(__pyx_k_Detour_app_app_r_mounts_mounts_r), 0, 1, 0, 0},
   {&__pyx_kp_u_EntryPoint_wsgi_app_wsgi_app_r_s, __pyx_k_EntryPoint_wsgi_app_wsgi_app_r_s, sizeof(__pyx_k_EntryPoint_wsgi_app_wsgi_app_r_s), 0, 1, 0, 0},
   {&__pyx_kp_u_Mount_Point_num_s_must_have_2_it, __pyx_k_Mount_Point_num_s_must_have_2_it, sizeof(__pyx_k_Mount_Point_num_s_must_have_2_it), 0, 1, 0, 0},
   {&__pyx_kp_u_Mount_Point_num_s_must_start_wit, __pyx_k_Mount_Point_num_s_must_start_wit, sizeof(__pyx_k_Mount_Point_num_s_must_start_wit), 0, 1, 0, 0},
   {&__pyx_kp_u_Mount_Point_num_s_tried_to_mount, __pyx_k_Mount_Point_num_s_tried_to_mount, sizeof(__pyx_k_Mount_Point_num_s_tried_to_mount), 0, 1, 0, 0},
-  {&__pyx_n_s_PATH_INFO, __pyx_k_PATH_INFO, sizeof(__pyx_k_PATH_INFO), 0, 0, 1, 1},
-  {&__pyx_n_s_SCRIPT_NAME, __pyx_k_SCRIPT_NAME, sizeof(__pyx_k_SCRIPT_NAME), 0, 0, 1, 1},
+  {&__pyx_n_u_PATH_INFO, __pyx_k_PATH_INFO, sizeof(__pyx_k_PATH_INFO), 0, 1, 0, 1},
+  {&__pyx_n_u_SCRIPT_NAME, __pyx_k_SCRIPT_NAME, sizeof(__pyx_k_SCRIPT_NAME), 0, 1, 0, 1},
   {&__pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_k_Users_kez_Virtualenvs_wsgiremou, sizeof(__pyx_k_Users_kez_Virtualenvs_wsgiremou), 0, 0, 1, 0},
   {&__pyx_n_s_VERSION, __pyx_k_VERSION, sizeof(__pyx_k_VERSION), 0, 0, 1, 1},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
-  {&__pyx_kp_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 0},
+  {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
   {&__pyx_n_s_app, __pyx_k_app, sizeof(__pyx_k_app), 0, 0, 1, 1},
+  {&__pyx_n_u_app, __pyx_k_app, sizeof(__pyx_k_app), 0, 1, 0, 1},
   {&__pyx_n_u_detour, __pyx_k_detour, sizeof(__pyx_k_detour), 0, 1, 0, 1},
   {&__pyx_n_s_detour___init, __pyx_k_detour___init, sizeof(__pyx_k_detour___init), 0, 0, 1, 1},
+  {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
   {&__pyx_n_s_entrypoints, __pyx_k_entrypoints, sizeof(__pyx_k_entrypoints), 0, 0, 1, 1},
+  {&__pyx_n_u_entrypoints, __pyx_k_entrypoints, sizeof(__pyx_k_entrypoints), 0, 1, 0, 1},
   {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
   {&__pyx_n_s_environ, __pyx_k_environ, sizeof(__pyx_k_environ), 0, 0, 1, 1},
   {&__pyx_n_s_get, __pyx_k_get, sizeof(__pyx_k_get), 0, 0, 1, 1},
   {&__pyx_n_s_get_version, __pyx_k_get_version, sizeof(__pyx_k_get_version), 0, 0, 1, 1},
   {&__pyx_n_s_handler, __pyx_k_handler, sizeof(__pyx_k_handler), 0, 0, 1, 1},
+  {&__pyx_n_u_handler, __pyx_k_handler, sizeof(__pyx_k_handler), 0, 1, 0, 1},
+  {&__pyx_kp_u_iso_8859_1, __pyx_k_iso_8859_1, sizeof(__pyx_k_iso_8859_1), 0, 1, 0, 0},
   {&__pyx_n_s_keys, __pyx_k_keys, sizeof(__pyx_k_keys), 0, 0, 1, 1},
+  {&__pyx_n_u_keys, __pyx_k_keys, sizeof(__pyx_k_keys), 0, 1, 0, 1},
   {&__pyx_n_s_long_check, __pyx_k_long_check, sizeof(__pyx_k_long_check), 0, 0, 1, 1},
+  {&__pyx_n_u_long_check, __pyx_k_long_check, sizeof(__pyx_k_long_check), 0, 1, 0, 1},
   {&__pyx_n_s_long_check_length, __pyx_k_long_check_length, sizeof(__pyx_k_long_check_length), 0, 0, 1, 1},
+  {&__pyx_n_u_long_check_length, __pyx_k_long_check_length, sizeof(__pyx_k_long_check_length), 0, 1, 0, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-  {&__pyx_n_s_mountpoint, __pyx_k_mountpoint, sizeof(__pyx_k_mountpoint), 0, 0, 1, 1},
+  {&__pyx_n_u_mountpoint, __pyx_k_mountpoint, sizeof(__pyx_k_mountpoint), 0, 1, 0, 1},
   {&__pyx_n_s_mounts, __pyx_k_mounts, sizeof(__pyx_k_mounts), 0, 0, 1, 1},
-  {&__pyx_n_s_num, __pyx_k_num, sizeof(__pyx_k_num), 0, 0, 1, 1},
+  {&__pyx_n_u_mounts, __pyx_k_mounts, sizeof(__pyx_k_mounts), 0, 1, 0, 1},
+  {&__pyx_n_u_num, __pyx_k_num, sizeof(__pyx_k_num), 0, 1, 0, 1},
   {&__pyx_n_s_position, __pyx_k_position, sizeof(__pyx_k_position), 0, 0, 1, 1},
   {&__pyx_n_s_prefix, __pyx_k_prefix, sizeof(__pyx_k_prefix), 0, 0, 1, 1},
+  {&__pyx_n_u_prefix, __pyx_k_prefix, sizeof(__pyx_k_prefix), 0, 1, 0, 1},
   {&__pyx_n_s_prepare_entrypoint, __pyx_k_prepare_entrypoint, sizeof(__pyx_k_prepare_entrypoint), 0, 0, 1, 1},
   {&__pyx_n_s_prepare_entrypoints, __pyx_k_prepare_entrypoints, sizeof(__pyx_k_prepare_entrypoints), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
-  {&__pyx_n_s_replace, __pyx_k_replace, sizeof(__pyx_k_replace), 0, 0, 1, 1},
-  {&__pyx_kp_s_s_s, __pyx_k_s_s, sizeof(__pyx_k_s_s), 0, 0, 1, 0},
+  {&__pyx_kp_u_s_s, __pyx_k_s_s, sizeof(__pyx_k_s_s), 0, 1, 0, 0},
   {&__pyx_n_s_short_check, __pyx_k_short_check, sizeof(__pyx_k_short_check), 0, 0, 1, 1},
+  {&__pyx_n_u_short_check, __pyx_k_short_check, sizeof(__pyx_k_short_check), 0, 1, 0, 1},
   {&__pyx_n_s_slots, __pyx_k_slots, sizeof(__pyx_k_slots), 0, 0, 1, 1},
   {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
   {&__pyx_n_s_start_response, __pyx_k_start_response, sizeof(__pyx_k_start_response), 0, 0, 1, 1},
@@ -4216,6 +4215,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_version_2, __pyx_k_version_2, sizeof(__pyx_k_version_2), 0, 0, 1, 1},
   {&__pyx_n_s_version_info, __pyx_k_version_info, sizeof(__pyx_k_version_info), 0, 0, 1, 1},
   {&__pyx_n_s_wsgi_app, __pyx_k_wsgi_app, sizeof(__pyx_k_wsgi_app), 0, 0, 1, 1},
+  {&__pyx_n_u_wsgi_app, __pyx_k_wsgi_app, sizeof(__pyx_k_wsgi_app), 0, 1, 0, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
@@ -4233,24 +4233,30 @@ static int __Pyx_InitCachedConstants(void) {
   /* "detour/__init__.py":96
  * 
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '')             # <<<<<<<<<<<<<<
- *         script_name = environ.get('SCRIPT_NAME', '')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
  *         entrypoints = self.entrypoints
  */
-  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_n_s_PATH_INFO, __pyx_kp_s__2); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_n_u_PATH_INFO, __pyx_kp_u__2); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_u_iso_8859_1); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
 
   /* "detour/__init__.py":97
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '')
- *         script_name = environ.get('SCRIPT_NAME', '')             # <<<<<<<<<<<<<<
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:
  */
-  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_n_s_SCRIPT_NAME, __pyx_kp_s__2); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 97, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__4);
-  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_n_u_SCRIPT_NAME, __pyx_kp_u__2); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_iso_8859_1); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
 
   /* "detour/__init__.py":16
  * VERSION = '0.1.0'
@@ -4259,7 +4265,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     return version
  * 
  */
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_get_version, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_get_version, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(0, 16, __pyx_L1_error)
 
   /* "detour/__init__.py":21
  * 
@@ -4268,9 +4274,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     def __init__(self, wsgi_app, short_check, long_check, long_check_length):
  */
-  __pyx_tuple__6 = PyTuple_Pack(4, __pyx_n_s_wsgi_app, __pyx_n_s_short_check, __pyx_n_s_long_check, __pyx_n_s_long_check_length); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_tuple__8 = PyTuple_Pack(4, __pyx_n_u_wsgi_app, __pyx_n_u_short_check, __pyx_n_u_long_check, __pyx_n_u_long_check_length); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
 
   /* "detour/__init__.py":41
  * 
@@ -4279,10 +4285,10 @@ static int __Pyx_InitCachedConstants(void) {
  *     short_check = prefix[:2]
  *     starts_with = short_check[:1]
  */
-  __pyx_tuple__7 = PyTuple_Pack(3, __pyx_n_s_position, __pyx_n_s_prefix, __pyx_n_s_handler); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_prepare_entrypoint, 41, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(3, __pyx_n_s_position, __pyx_n_s_prefix, __pyx_n_s_handler); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_prepare_entrypoint, 41, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 41, __pyx_L1_error)
 
   /* "detour/__init__.py":69
  * 
@@ -4291,10 +4297,10 @@ static int __Pyx_InitCachedConstants(void) {
  *     results = []
  *     for position, entrypoint_config in enumerate(entrypoints, start=1):
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_n_s_entrypoints); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_prepare_entrypoints, 69, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_tuple__11 = PyTuple_Pack(1, __pyx_n_s_entrypoints); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_prepare_entrypoints, 69, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 69, __pyx_L1_error)
 
   /* "detour/__init__.py":89
  * 
@@ -4303,9 +4309,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     def __init__(self, app, mounts):
  */
-  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_n_s_app, __pyx_n_s_entrypoints); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 89, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_n_u_app, __pyx_n_u_entrypoints); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4445,7 +4451,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  * __version__ = '0.1.0'
  * version = '0.1.0'
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version_info, __pyx_kp_s_0_1_0) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version_info, __pyx_kp_u_0_1_0) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
 
   /* "detour/__init__.py":12
  * 
@@ -4454,7 +4460,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  * version = '0.1.0'
  * VERSION = '0.1.0'
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version_2, __pyx_kp_s_0_1_0) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version_2, __pyx_kp_u_0_1_0) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
 
   /* "detour/__init__.py":13
  * __version_info__ = '0.1.0'
@@ -4463,7 +4469,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  * VERSION = '0.1.0'
  * 
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_s_0_1_0) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_u_0_1_0) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
 
   /* "detour/__init__.py":14
  * __version__ = '0.1.0'
@@ -4472,7 +4478,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  * 
  * def get_version():
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_VERSION, __pyx_kp_s_0_1_0) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_VERSION, __pyx_kp_u_0_1_0) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
 
   /* "detour/__init__.py":16
  * VERSION = '0.1.0'
@@ -4481,7 +4487,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *     return version
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___1get_version, 0, __pyx_n_s_get_version, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___1get_version, 0, __pyx_n_s_get_version, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_version, __pyx_t_1) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4493,7 +4499,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  * 
  *     def __init__(self, wsgi_app, short_check, long_check, long_check_length):
  */
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___EntryPoint->tp_dict, __pyx_n_s_slots, __pyx_tuple__6) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___EntryPoint->tp_dict, __pyx_n_s_slots, __pyx_tuple__8) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
   PyType_Modified(__pyx_ptype_6detour_8__init___EntryPoint);
 
   /* "detour/__init__.py":41
@@ -4503,7 +4509,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *     short_check = prefix[:2]
  *     starts_with = short_check[:1]
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___3prepare_entrypoint, 0, __pyx_n_s_prepare_entrypoint, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___3prepare_entrypoint, 0, __pyx_n_s_prepare_entrypoint, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_prepare_entrypoint, __pyx_t_1) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4515,7 +4521,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *     results = []
  *     for position, entrypoint_config in enumerate(entrypoints, start=1):
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___5prepare_entrypoints, 0, __pyx_n_s_prepare_entrypoints, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___5prepare_entrypoints, 0, __pyx_n_s_prepare_entrypoints, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__12)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_prepare_entrypoints, __pyx_t_1) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4527,12 +4533,12 @@ PyMODINIT_FUNC PyInit_detour(void)
  * 
  *     def __init__(self, app, mounts):
  */
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___Detour->tp_dict, __pyx_n_s_slots, __pyx_tuple__11) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___Detour->tp_dict, __pyx_n_s_slots, __pyx_tuple__13) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
   PyType_Modified(__pyx_ptype_6detour_8__init___Detour);
 
   /* "detour/__init__.py":1
  * # -*- coding: utf-8 -*-             # <<<<<<<<<<<<<<
- * #cython: boundscheck=True, wraparound=False, embedsignature=True, always_allow_keywords=True
+ * #cython: language_level=3, boundscheck=True, wraparound=False, embedsignature=True, always_allow_keywords=True
  * from __future__ import absolute_import
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -5221,6 +5227,32 @@ static CYTHON_INLINE int __Pyx_ArgTypeTest(PyObject *obj, PyTypeObject *type, in
     PyErr_Format(PyExc_TypeError, "Cannot convert %.200s to %.200s",
                  Py_TYPE(obj)->tp_name, type->tp_name);
     return 0;
+}
+
+/* PyUnicode_Substring */
+    static CYTHON_INLINE PyObject* __Pyx_PyUnicode_Substring(
+            PyObject* text, Py_ssize_t start, Py_ssize_t stop) {
+    Py_ssize_t length;
+    if (unlikely(__Pyx_PyUnicode_READY(text) == -1)) return NULL;
+    length = __Pyx_PyUnicode_GET_LENGTH(text);
+    if (start < 0) {
+        start += length;
+        if (start < 0)
+            start = 0;
+    }
+    if (stop < 0)
+        stop += length;
+    else if (stop > length)
+        stop = length;
+    length = stop - start;
+    if (length <= 0)
+        return PyUnicode_FromUnicode(NULL, 0);
+#if CYTHON_PEP393_ENABLED
+    return PyUnicode_FromKindAndData(PyUnicode_KIND(text),
+        PyUnicode_1BYTE_DATA(text) + start*PyUnicode_KIND(text), stop-start);
+#else
+    return PyUnicode_FromUnicode(PyUnicode_AS_UNICODE(text)+start, stop-start);
+#endif
 }
 
 /* PyFunctionFastCall */
