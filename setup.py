@@ -55,6 +55,7 @@ KEYWORDS = (
 )
 
 SKIP_EXTENSIONS = bool(int(os.environ.get('DETOUR_SKIP_EXTENSIONS', 0)))
+print("DETOUR_SKIP_EXTENSIONS ... %s" % SKIP_EXTENSIONS)
 extensions = ()
 if SKIP_EXTENSIONS is False:
     ext = '.py' if HAS_CYTHON else '.c'
