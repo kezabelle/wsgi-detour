@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from __future__ import print_function
-
 import pytest
-
+import sys
 from detour import Detour, get_version, VERSION
+PY2 = sys.version_info.major == 2
+PY3 = sys.version_info.major == 3
+if PY3:
+    unicode = str
 
 
 def test_get_version():
@@ -20,7 +23,7 @@ def test_informative_error_if_not_enough_args():
     error_message = "Mount Point #1 must have 2 items, a mountpoint like " \
                     "'/app', and a WSGI application instance. " \
                     "Example: ('/app1', MyAppHandler())"
-    assert error_message in exc.value
+    assert error_message in unicode(exc.value)
 
 
 def test_informative_error_if_missing_slash_at_start():
@@ -31,7 +34,7 @@ def test_informative_error_if_missing_slash_at_start():
         Detour(None, apps)
     error_message = "Mount Point #1 must start with a '/', got 'wheee' " \
                     "for handler: None"
-    assert error_message in exc.value
+    assert error_message in unicode(exc.value)
 
 
 def test_informative_error_if_trying_to_mount_at_root():
@@ -43,7 +46,7 @@ def test_informative_error_if_trying_to_mount_at_root():
     error_message = "Mount Point #1 tried to mount None at root, which isn't " \
                     "supported. The fallback WSGI application should be " \
                     "handling these requests."
-    assert error_message in exc.value
+    assert error_message in unicode(exc.value)
 
 
 @pytest.mark.parametrize("entry_point_config", [
