@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from __future__ import print_function
-import pytest
+
+import os
+import pickle
 import sys
+
+import pytest
+
 from detour import Detour, get_version, VERSION
+
 PY2 = sys.version_info.major == 2
 PY3 = sys.version_info.major == 3
 if PY3:
@@ -67,3 +73,106 @@ def test_building_entrypoints_ok(entry_point_config):
     assert ep.long_check_length == 6
     ep_repr = "EntryPoint(wsgi_app=None, short_check='/w', long_check='/wheee', long_check_length=6)"
     assert repr(ep) == ep_repr
+
+
+def _fallback(environ, start_response):
+    start_response('200 OK', [('content-type', 'text/html')])
+    return ('fallback',)
+
+
+def test_fallback_empty_mounts():
+    def start_response(*args, **kwargs):
+        return args, kwargs
+
+
+    app = Detour(_fallback, ())
+    environ = {}
+    response = app(environ, start_response)
+    assert response == ('fallback',)
+
+
+def test_fallback_because_misses_short_check():
+    def start_response(*args, **kwargs):
+        return args, kwargs
+
+    def test_app(environ, start_response):
+        start_response('200 OK', [('content-type', 'text/html')])
+        return ('test app',)
+
+    app = Detour(_fallback, (
+        ('/xoxo', test_app),
+    ))
+    environ = {
+        'PATH_INFO': "/test/request/"
+    }
+    response = app(environ, start_response)
+    assert response == ('fallback',)
+
+
+def test_fallback_because_misses_long_check():
+    def start_response(*args, **kwargs):
+        return args, kwargs
+
+    def test_app(environ, start_response):
+        start_response('200 OK', [('content-type', 'text/html')])
+        return ('test app',)
+
+    app = Detour(_fallback, (
+        ('/tesnope', test_app),
+    ))
+    environ = {
+        'PATH_INFO': "/test/request/"
+    }
+    response = app(environ, start_response)
+    assert response == ('fallback',)
+
+
+def test_dispatched_to_app():
+    def start_response(*args, **kwargs):
+        return args, kwargs
+
+    def test_app(environ, start_response):
+        start_response('200 OK', [('content-type', 'text/html')])
+        return ('test app',)
+
+    app = Detour(_fallback, (
+        ('/test', test_app),
+    ))
+    environ = {
+        'PATH_INFO': "/test/request/",
+        'SCRIPT_NAME': 'HELLO',
+    }
+    response = app(environ, start_response)
+    assert response == ('test app',)
+    assert environ == {'PATH_INFO': '/request/',
+                       'SCRIPT_NAME': 'HELLO/test'}
+
+
+def test_repr():
+    def test_app(environ, start_response):
+        start_response('200 OK', [('content-type', 'text/html')])
+        return ('test app',)
+    app = Detour(_fallback, (
+        ('/test', test_app),
+        ('/another', test_app),
+        ('/whee', test_app),
+    ))
+    _repr_ = repr(app)
+    assert _repr_.startswith("Detour(app=")
+    assert ", mounts=[" in _repr_
+    assert _repr_.endswith("])")
+
+
+def picklable_app(environ, start_response):
+    start_response('200 OK', [('content-type', 'text/plain')])
+    return ('pickle pockle',)
+
+
+@pytest.mark.skipif(bool(int(os.getenv('DETOUR_SKIP_EXTENSIONS', 0))),
+                    reason="I dunno how to make cython stuff picklable yet tbh")
+def test_pickle():
+    app = Detour(_fallback, (
+        ('/test', picklable_app),
+    ))
+    pickled = pickle.dumps(app)
+    unpickled = pickle.loads(pickled)
