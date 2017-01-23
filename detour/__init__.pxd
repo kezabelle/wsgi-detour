@@ -22,7 +22,7 @@ cdef class Detour:
     cpdef public app
     cpdef public list entrypoints
 
-    @cython.locals(path_info=str, script_name=str, entrypoints=list,
-                   short_slice=str, short_check=basestring, long_slice=str,
-                   long_check=basestring)
+    @cython.locals(path_info=basestring, script_name=basestring, entrypoints=list,
+                   short_slice=basestring, short_check=basestring,
+                   long_slice=basestring, long_check=basestring)
     cdef handle(self, environ, start_response)
