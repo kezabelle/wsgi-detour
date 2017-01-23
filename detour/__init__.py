@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#cython: language_level=3, boundscheck=True, wraparound=False, embedsignature=True, always_allow_keywords=True
+#cython: language_level=3, boundscheck=True, wraparound=False, embedsignature=True
 from __future__ import absolute_import
 
 # As far as I can tell, once an __init__.so exists, this file is basically
@@ -84,7 +84,7 @@ def prepare_entrypoints(entrypoints):
     results = []
     for position, entrypoint_config in enumerate(entrypoints, start=1):
         if hasattr(entrypoint_config, 'keys') and callable(entrypoint_config.keys):
-            mounter = prepare_entrypoint(position, **entrypoint_config)
+            mounter = prepare_entrypoint(position, entrypoint_config['prefix'], entrypoint_config['handler'])
         else:
             entrypoint_config_length = len(entrypoint_config)
             if entrypoint_config_length < 2:
@@ -94,7 +94,8 @@ def prepare_entrypoints(entrypoints):
                           'num': position,
                       }
                 raise ValueError(msg)
-            mounter = prepare_entrypoint(position, *entrypoint_config)
+            mounter = prepare_entrypoint(position, entrypoint_config[0],
+                                         entrypoint_config[1])
         results.append(mounter)
     return results
 
@@ -104,7 +105,7 @@ class Detour(object):
 
     def __init__(self, app, mounts):
         self.app = app
-        self.entrypoints = prepare_entrypoints(entrypoints=mounts)
+        self.entrypoints = prepare_entrypoints(mounts)
 
     def handle(self, environ, start_response):
         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
