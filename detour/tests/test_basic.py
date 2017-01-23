@@ -168,7 +168,7 @@ def picklable_app(environ, start_response):
     return ('pickle pockle',)
 
 
-@pytest.mark.skipif(bool(int(os.getenv('DETOUR_SKIP_EXTENSIONS', 0))),
+@pytest.mark.skipif(bool(int(os.getenv('DETOUR_SKIP_EXTENSIONS', 0))) is False,
                     reason="I dunno how to make cython stuff picklable yet tbh")
 def test_pickle():
     app = Detour(_fallback, (
