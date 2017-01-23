@@ -37,6 +37,20 @@ class EntryPoint(object):
                    'long_check_length': self.long_check_length,
                }
 
+    def __getstate__(self):
+        return {
+            'wsgi_app': self.wsgi_app,
+            'short_check': self.short_check,
+            'long_check': self.long_check,
+            'long_check_length': self.long_check_length,
+        }
+
+    def __setstate__(self, items):
+        self.wsgi_app = items.get('wsgi_app')
+        self.short_check = items.get('short_check')
+        self.long_check = items.get('long_check')
+        self.long_check_length = items.get('long_check_length')
+
 
 def prepare_entrypoint(position, prefix, handler):
     short_check = prefix[:2]
@@ -127,3 +141,13 @@ class Detour(object):
             'app': self.app,
             'mounts': mounts,
         }
+
+    def __getstate__(self):
+        return {
+            'app': self.app,
+            'entrypoints': self.entrypoints,
+        }
+
+    def __setstate__(self, items):
+        self.app = items.get('app')
+        self.entrypoints = items.get('entrypoints')
