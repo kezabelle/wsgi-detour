@@ -9,6 +9,8 @@ clean-build:
 	rm -fr build/
 	rm -fr htmlcov/
 	rm -fr dist/
+	rm -fr .tox/
+	rm -fr .cache/
 	rm -fr .eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
