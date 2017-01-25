@@ -108,8 +108,8 @@ class Detour(object):
         self.entrypoints = prepare_entrypoints(mounts)
 
     def handle(self, environ, start_response):
-        path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
-        script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+        path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')
+        script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
         entrypoints = self.entrypoints
         for mount_entry in entrypoints:
             # Grab first N chars of URL to compare

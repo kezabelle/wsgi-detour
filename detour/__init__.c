@@ -1061,8 +1061,11 @@ static const char __pyx_k_0_1_0[] = "0.1.0";
 static const char __pyx_k_items[] = "items";
 static const char __pyx_k_slots[] = "__slots__";
 static const char __pyx_k_start[] = "start";
+static const char __pyx_k_utf_8[] = "utf-8";
+static const char __pyx_k_decode[] = "decode";
 static const char __pyx_k_detour[] = "detour";
 static const char __pyx_k_encode[] = "encode";
+static const char __pyx_k_ignore[] = "ignore";
 static const char __pyx_k_mounts[] = "mounts";
 static const char __pyx_k_prefix[] = "prefix";
 static const char __pyx_k_VERSION[] = "VERSION";
@@ -1118,6 +1121,7 @@ static PyObject *__pyx_kp_u__7;
 static PyObject *__pyx_kp_u__8;
 static PyObject *__pyx_n_s_app;
 static PyObject *__pyx_n_u_app;
+static PyObject *__pyx_n_s_decode;
 static PyObject *__pyx_n_u_detour;
 static PyObject *__pyx_n_s_detour___init;
 static PyObject *__pyx_n_s_encode;
@@ -1128,6 +1132,7 @@ static PyObject *__pyx_n_s_get;
 static PyObject *__pyx_n_s_get_version;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_u_handler;
+static PyObject *__pyx_n_u_ignore;
 static PyObject *__pyx_kp_u_iso_8859_1;
 static PyObject *__pyx_n_s_items;
 static PyObject *__pyx_n_s_keys;
@@ -1153,6 +1158,7 @@ static PyObject *__pyx_n_s_slots;
 static PyObject *__pyx_n_s_start;
 static PyObject *__pyx_n_s_start_response;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_kp_u_utf_8;
 static PyObject *__pyx_n_s_version;
 static PyObject *__pyx_n_s_version_2;
 static PyObject *__pyx_n_s_version_info;
@@ -1196,23 +1202,25 @@ static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__9;
-static PyObject *__pyx_slice__13;
+static PyObject *__pyx_slice__15;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__12;
+static PyObject *__pyx_tuple__13;
 static PyObject *__pyx_tuple__14;
-static PyObject *__pyx_tuple__15;
+static PyObject *__pyx_tuple__16;
 static PyObject *__pyx_tuple__17;
-static PyObject *__pyx_tuple__18;
+static PyObject *__pyx_tuple__19;
 static PyObject *__pyx_tuple__20;
 static PyObject *__pyx_tuple__22;
-static PyObject *__pyx_tuple__23;
+static PyObject *__pyx_tuple__24;
 static PyObject *__pyx_tuple__25;
-static PyObject *__pyx_codeobj__16;
-static PyObject *__pyx_codeobj__19;
+static PyObject *__pyx_tuple__27;
+static PyObject *__pyx_codeobj__18;
 static PyObject *__pyx_codeobj__21;
-static PyObject *__pyx_codeobj__24;
+static PyObject *__pyx_codeobj__23;
 static PyObject *__pyx_codeobj__26;
+static PyObject *__pyx_codeobj__28;
 
 /* "detour/__init__.py":16
  * VERSION = '0.1.0'
@@ -2971,8 +2979,8 @@ static int __pyx_pf_6detour_8__init___6Detour___init__(struct __pyx_obj_6detour_
  *         self.entrypoints = prepare_entrypoints(mounts)
  * 
  *     def handle(self, environ, start_response):             # <<<<<<<<<<<<<<
- *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
  */
 
 static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6detour_8__init___Detour *__pyx_v_self, PyObject *__pyx_v_environ, PyObject *__pyx_v_start_response) {
@@ -3001,8 +3009,8 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   /* "detour/__init__.py":111
  * 
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
  *         entrypoints = self.entrypoints
  */
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_environ, __pyx_n_s_get); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
@@ -3016,33 +3024,45 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_decode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_path_info = __pyx_t_2;
   __pyx_t_2 = 0;
 
   /* "detour/__init__.py":112
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_environ, __pyx_n_s_get); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__12, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__13, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_decode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_script_name = __pyx_t_1;
   __pyx_t_1 = 0;
 
   /* "detour/__init__.py":113
- *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
  *         entrypoints = self.entrypoints             # <<<<<<<<<<<<<<
  *         for mount_entry in entrypoints:
  *             # Grab first N chars of URL to compare
@@ -3053,7 +3073,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
   __pyx_t_1 = 0;
 
   /* "detour/__init__.py":114
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:             # <<<<<<<<<<<<<<
  *             # Grab first N chars of URL to compare
@@ -3082,7 +3102,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  *             short_check = mount_entry.short_check
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_path_info, 0, 2, NULL, NULL, &__pyx_slice__13, 0, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_path_info, 0, 2, NULL, NULL, &__pyx_slice__15, 0, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_XDECREF_SET(__pyx_v_short_slice, __pyx_t_2);
     __pyx_t_2 = 0;
@@ -3318,7 +3338,7 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
     }
 
     /* "detour/__init__.py":114
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:             # <<<<<<<<<<<<<<
  *             # Grab first N chars of URL to compare
@@ -3401,8 +3421,8 @@ static PyObject *__pyx_f_6detour_8__init___6Detour_handle(struct __pyx_obj_6deto
  *         self.entrypoints = prepare_entrypoints(mounts)
  * 
  *     def handle(self, environ, start_response):             # <<<<<<<<<<<<<<
- *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
  */
 
   /* function exit code */
@@ -3805,7 +3825,7 @@ static PyObject *__pyx_pf_6detour_8__init___6Detour_8__setstate__(struct __pyx_o
  */
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_items, __pyx_n_s_get); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_GIVEREF(__pyx_t_2);
@@ -3821,7 +3841,7 @@ static PyObject *__pyx_pf_6detour_8__init___6Detour_8__setstate__(struct __pyx_o
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_items, __pyx_n_s_get); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__15, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (!(likely(PyList_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 154, __pyx_L1_error)
@@ -4430,6 +4450,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u__8, __pyx_k__8, sizeof(__pyx_k__8), 0, 1, 0, 0},
   {&__pyx_n_s_app, __pyx_k_app, sizeof(__pyx_k_app), 0, 0, 1, 1},
   {&__pyx_n_u_app, __pyx_k_app, sizeof(__pyx_k_app), 0, 1, 0, 1},
+  {&__pyx_n_s_decode, __pyx_k_decode, sizeof(__pyx_k_decode), 0, 0, 1, 1},
   {&__pyx_n_u_detour, __pyx_k_detour, sizeof(__pyx_k_detour), 0, 1, 0, 1},
   {&__pyx_n_s_detour___init, __pyx_k_detour___init, sizeof(__pyx_k_detour___init), 0, 0, 1, 1},
   {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
@@ -4440,6 +4461,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_get_version, __pyx_k_get_version, sizeof(__pyx_k_get_version), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_n_u_handler, __pyx_k_handler, sizeof(__pyx_k_handler), 0, 1, 0, 1},
+  {&__pyx_n_u_ignore, __pyx_k_ignore, sizeof(__pyx_k_ignore), 0, 1, 0, 1},
   {&__pyx_kp_u_iso_8859_1, __pyx_k_iso_8859_1, sizeof(__pyx_k_iso_8859_1), 0, 1, 0, 0},
   {&__pyx_n_s_items, __pyx_k_items, sizeof(__pyx_k_items), 0, 0, 1, 1},
   {&__pyx_n_s_keys, __pyx_k_keys, sizeof(__pyx_k_keys), 0, 0, 1, 1},
@@ -4465,6 +4487,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
   {&__pyx_n_s_start_response, __pyx_k_start_response, sizeof(__pyx_k_start_response), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_kp_u_utf_8, __pyx_k_utf_8, sizeof(__pyx_k_utf_8), 0, 1, 0, 0},
   {&__pyx_n_s_version, __pyx_k_version, sizeof(__pyx_k_version), 0, 0, 1, 1},
   {&__pyx_n_s_version_2, __pyx_k_version_2, sizeof(__pyx_k_version_2), 0, 0, 1, 1},
   {&__pyx_n_s_version_info, __pyx_k_version_info, sizeof(__pyx_k_version_info), 0, 0, 1, 1},
@@ -4553,8 +4576,8 @@ static int __Pyx_InitCachedConstants(void) {
   /* "detour/__init__.py":111
  * 
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')
  *         entrypoints = self.entrypoints
  */
   __pyx_tuple__9 = PyTuple_Pack(2, __pyx_n_u_PATH_INFO, __pyx_kp_u__8); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 111, __pyx_L1_error)
@@ -4563,20 +4586,26 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__10 = PyTuple_Pack(1, __pyx_kp_u_iso_8859_1); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_kp_u_utf_8, __pyx_n_u_ignore); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
 
   /* "detour/__init__.py":112
  *     def handle(self, environ, start_response):
- *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1')
- *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1')             # <<<<<<<<<<<<<<
+ *         path_info = environ.get('PATH_INFO', '').encode('iso-8859-1').decode('utf-8', 'ignore')
+ *         script_name = environ.get('SCRIPT_NAME', '').encode('iso-8859-1').decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
  *         entrypoints = self.entrypoints
  *         for mount_entry in entrypoints:
  */
-  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_n_u_SCRIPT_NAME, __pyx_kp_u__8); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 112, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_kp_u_iso_8859_1); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(2, __pyx_n_u_SCRIPT_NAME, __pyx_kp_u__8); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_kp_u_iso_8859_1); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__14 = PyTuple_Pack(2, __pyx_kp_u_utf_8, __pyx_n_u_ignore); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__14);
+  __Pyx_GIVEREF(__pyx_tuple__14);
 
   /* "detour/__init__.py":116
  *         for mount_entry in entrypoints:
@@ -4585,9 +4614,9 @@ static int __Pyx_InitCachedConstants(void) {
  *             short_check = mount_entry.short_check
  * 
  */
-  __pyx_slice__13 = PySlice_New(Py_None, __pyx_int_2, Py_None); if (unlikely(!__pyx_slice__13)) __PYX_ERR(0, 116, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__13);
-  __Pyx_GIVEREF(__pyx_slice__13);
+  __pyx_slice__15 = PySlice_New(Py_None, __pyx_int_2, Py_None); if (unlikely(!__pyx_slice__15)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__15);
+  __Pyx_GIVEREF(__pyx_slice__15);
 
   /* "detour/__init__.py":153
  * 
@@ -4595,18 +4624,18 @@ static int __Pyx_InitCachedConstants(void) {
  *         self.app = items.get('app')             # <<<<<<<<<<<<<<
  *         self.entrypoints = items.get('entrypoints')
  */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_n_u_app); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 153, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_n_u_app); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
 
   /* "detour/__init__.py":154
  *     def __setstate__(self, items):
  *         self.app = items.get('app')
  *         self.entrypoints = items.get('entrypoints')             # <<<<<<<<<<<<<<
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_n_u_entrypoints); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 154, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
+  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_n_u_entrypoints); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__17);
+  __Pyx_GIVEREF(__pyx_tuple__17);
 
   /* "detour/__init__.py":16
  * VERSION = '0.1.0'
@@ -4615,7 +4644,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     return version
  * 
  */
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_get_version, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_get_version, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 16, __pyx_L1_error)
 
   /* "detour/__init__.py":21
  * 
@@ -4624,9 +4653,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     def __init__(self, wsgi_app, short_check, long_check, long_check_length):
  */
-  __pyx_tuple__17 = PyTuple_Pack(4, __pyx_n_u_wsgi_app, __pyx_n_u_short_check, __pyx_n_u_long_check, __pyx_n_u_long_check_length); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
+  __pyx_tuple__19 = PyTuple_Pack(4, __pyx_n_u_wsgi_app, __pyx_n_u_short_check, __pyx_n_u_long_check, __pyx_n_u_long_check_length); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__19);
+  __Pyx_GIVEREF(__pyx_tuple__19);
 
   /* "detour/__init__.py":40
  *                }
@@ -4635,10 +4664,10 @@ static int __Pyx_InitCachedConstants(void) {
  *         return {
  *             'wsgi_app': self.wsgi_app,
  */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 40, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
-  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_getstate, 40, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__20);
+  __Pyx_GIVEREF(__pyx_tuple__20);
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_getstate, 40, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 40, __pyx_L1_error)
 
   /* "detour/__init__.py":48
  *         }
@@ -4647,10 +4676,10 @@ static int __Pyx_InitCachedConstants(void) {
  *         self.wsgi_app = items.get('wsgi_app')
  *         self.short_check = items.get('short_check')
  */
-  __pyx_tuple__20 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_items); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 48, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_setstate, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_items); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_setstate, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 48, __pyx_L1_error)
 
   /* "detour/__init__.py":104
  * 
@@ -4659,9 +4688,9 @@ static int __Pyx_InitCachedConstants(void) {
  * 
  *     def __init__(self, app, mounts):
  */
-  __pyx_tuple__22 = PyTuple_Pack(2, __pyx_n_u_app, __pyx_n_u_entrypoints); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
+  __pyx_tuple__24 = PyTuple_Pack(2, __pyx_n_u_app, __pyx_n_u_entrypoints); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
 
   /* "detour/__init__.py":146
  *         }
@@ -4670,10 +4699,10 @@ static int __Pyx_InitCachedConstants(void) {
  *         return {
  *             'app': self.app,
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 146, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_getstate, 146, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__25);
+  __Pyx_GIVEREF(__pyx_tuple__25);
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_getstate, 146, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 146, __pyx_L1_error)
 
   /* "detour/__init__.py":152
  *         }
@@ -4682,10 +4711,10 @@ static int __Pyx_InitCachedConstants(void) {
  *         self.app = items.get('app')
  *         self.entrypoints = items.get('entrypoints')
  */
-  __pyx_tuple__25 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_items); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 152, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__25);
-  __Pyx_GIVEREF(__pyx_tuple__25);
-  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_setstate, 152, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_tuple__27 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_items); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__27);
+  __Pyx_GIVEREF(__pyx_tuple__27);
+  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_kez_Virtualenvs_wsgiremou, __pyx_n_s_setstate, 152, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4862,7 +4891,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *     return version
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___1get_version, 0, __pyx_n_s_get_version, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__16)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___1get_version, 0, __pyx_n_s_get_version, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__18)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_version, __pyx_t_1) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4874,7 +4903,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  * 
  *     def __init__(self, wsgi_app, short_check, long_check, long_check_length):
  */
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___EntryPoint->tp_dict, __pyx_n_s_slots, __pyx_tuple__17) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___EntryPoint->tp_dict, __pyx_n_s_slots, __pyx_tuple__19) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
   PyType_Modified(__pyx_ptype_6detour_8__init___EntryPoint);
 
   /* "detour/__init__.py":40
@@ -4884,7 +4913,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *         return {
  *             'wsgi_app': self.wsgi_app,
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___10EntryPoint_5__getstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_EntryPoint___getstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__19)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___10EntryPoint_5__getstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_EntryPoint___getstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___EntryPoint->tp_dict, __pyx_n_s_getstate, __pyx_t_1) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4897,7 +4926,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *         self.wsgi_app = items.get('wsgi_app')
  *         self.short_check = items.get('short_check')
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___10EntryPoint_7__setstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_EntryPoint___setstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___10EntryPoint_7__setstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_EntryPoint___setstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___EntryPoint->tp_dict, __pyx_n_s_setstate, __pyx_t_1) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4910,7 +4939,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  * 
  *     def __init__(self, app, mounts):
  */
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___Detour->tp_dict, __pyx_n_s_slots, __pyx_tuple__22) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___Detour->tp_dict, __pyx_n_s_slots, __pyx_tuple__24) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
   PyType_Modified(__pyx_ptype_6detour_8__init___Detour);
 
   /* "detour/__init__.py":146
@@ -4920,7 +4949,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *         return {
  *             'app': self.app,
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___6Detour_7__getstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Detour___getstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___6Detour_7__getstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Detour___getstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__26)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___Detour->tp_dict, __pyx_n_s_getstate, __pyx_t_1) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -4933,7 +4962,7 @@ PyMODINIT_FUNC PyInit_detour(void)
  *         self.app = items.get('app')
  *         self.entrypoints = items.get('entrypoints')
  */
-  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___6Detour_9__setstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Detour___setstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__26)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6detour_8__init___6Detour_9__setstate__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Detour___setstate, NULL, __pyx_n_s_detour___init, __pyx_d, ((PyObject *)__pyx_codeobj__28)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem((PyObject *)__pyx_ptype_6detour_8__init___Detour->tp_dict, __pyx_n_s_setstate, __pyx_t_1) < 0) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
