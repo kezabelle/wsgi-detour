@@ -48,7 +48,8 @@ import detour
 def raw_wsgi(environ, start_response):
     setup_testing_defaults(environ)
     start_response('200 OK', [('content-type', 'text/html')])
-    data = 'Another view from wsgi-detour==%s' % detour.get_version()
+    data = 'Another view from wsgi-detour==%s, running under Python%s' % (
+        detour.get_version(), sys.version_info.major)
     return (bytes(data.encode('utf-8')),)
 
 # ------------------------------------------------------------------------------
@@ -97,7 +98,7 @@ def fallback(environ, start_response):
     setup_testing_defaults(environ)
     start_response('404 Not Found', [('content-type', 'text/html')])
     data = """
-    Fallback from wsgi-detour==%s
+    Fallback from wsgi-detour==%s, running under Python%s
     <ul>
     <li><a href="/raw/">a raw WSGI app</a></li>
     <li><a href="/bottled/">a Bottle app</a>
@@ -113,7 +114,7 @@ def fallback(environ, start_response):
         </ul>
     </li>
     </ul>
-    """ % detour.get_version()
+    """ % (detour.get_version(), sys.version_info.major)
     return (bytes(data.encode('utf-8')),)
 
 # ------------------------------------------------------------------------------
@@ -160,6 +161,8 @@ if __name__ == '__main__':
         run_func = wsgi_via_wsgiref
 
     try:
+        version_str = ".".join(str(x) for x in sys.version_info[:3])
+        sys.stdout.write("Running demo project via Python %s\n" % (version_str,))
         sys.stdout.write("You can halt this with KeyboardInterrupt (Ctrl-C or whatever)\n")
         run_func('', 8080, application)
     except KeyboardInterrupt:
