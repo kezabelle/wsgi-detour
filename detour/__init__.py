@@ -47,9 +47,9 @@ class EntryPoint(object):
 
     def __setstate__(self, items):
         self.wsgi_app = items.get('wsgi_app')
-        self.short_check = items.get('short_check')
-        self.long_check = items.get('long_check')
-        self.long_check_length = items.get('long_check_length')
+        self.short_check = items.get('short_check')  # type: str
+        self.long_check = items.get('long_check')  # type: str
+        self.long_check_length = items.get('long_check_length')  # type: int
 
 
 def prepare_entrypoint(position, prefix, handler):
@@ -113,14 +113,14 @@ class Detour(object):
         entrypoints = self.entrypoints
         for mount_entry in entrypoints:
             # Grab first N chars of URL to compare
-            short_slice = path_info[:2]
-            short_check = mount_entry.short_check
+            short_slice = path_info[:2] # type: str
+            short_check = mount_entry.short_check # type: int
 
             if short_slice == short_check:
                 # first N chars of URL/mount were correct, now do the
                 # full comparison for the mountpoint.
-                long_slice = path_info[:mount_entry.long_check_length]
-                long_check = mount_entry.long_check
+                long_slice = path_info[:mount_entry.long_check_length] # type: str
+                long_check = mount_entry.long_check # type: int
 
                 if long_slice == long_check:
                     # Rejig the environ dict's data and dispatch to the given
@@ -151,4 +151,4 @@ class Detour(object):
 
     def __setstate__(self, items):
         self.app = items.get('app')
-        self.entrypoints = items.get('entrypoints')
+        self.entrypoints = items.get('entrypoints')  # type: list
