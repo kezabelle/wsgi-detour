@@ -8,7 +8,16 @@ Installation instructions
 -------------------------
 
 Currently you need to clone it from `GitHub`_ because I have little idea
-about how well it works.
+about how well it works, or if it works at all (though the tests should pass...)
+
+.. |travis_master| image:: https://travis-ci.org/kezabelle/wsgi-detour.svg?branch=master
+  :target: https://travis-ci.org/kezabelle/wsgi-detour
+
+==============  ======
+Release         Status
+==============  ======
+master          |travis_master|
+==============  ======
 
 
 What it is
@@ -17,7 +26,7 @@ What it is
 A ``WSGI`` middleware which dispatches requests to different ``WSGI`` applications
 based on their path prefix.
 
-Given a standard `Django`_ application mounted at ``/``, Detour makes it
+Given a standard ``WSGI`` application mounted at ``/``, Detour makes it
 possible to re-route requests for, say, ``/my-awesome-app/`` to a different
 WSGI app before they ever get to `Django`_ ... which I know is kind of
 a niche requirement.
@@ -25,11 +34,19 @@ a niche requirement.
 What's so special about it?
 ---------------------------
 
-Nothing, really.
-
+Nothing, really. It comes with pre-cythonized C output, for building an
+extension module ... so maybe it'll not-slow?
 
 Why I wrote it
 --------------
+
+I have `Django`_ application and I have a new part to add which ostensibly could
+be a separate microservice, but the easiest way to weld that microservice into
+the monolith is to keep the ecosystem pretending it's not separate.
+
+This means wrapping the existing `Django`_ ``WSGI`` ``application`` object
+so that auto-reloading works with the new separate app, and avoids needing
+to configure the production HTTPd to add additional mount points.
 
 Usage
 -----
@@ -51,6 +68,13 @@ So here's an example of that::
 Any alternatives?
 -----------------
 
+Yes, plenty. But why use something when I could re-invent the wheel like a
+chump? Betting on werkzeug seems like an obvious choice, otherwise.
+
+* `selector`_ - WSGI request delegation. (AKA routing.)
+* `wsgirewrite`_ - an implementation of a mod_rewrite compatible URL rewriter
+* `urlrelay`_ - passes HTTP requests to a WSGI application based on a matching regular expression..
+* `werkzeug.DispatcherMiddleware`_ - combine multiple WSGI applications
 
 Running the tests
 -----------------
@@ -64,6 +88,9 @@ Python compiled via `Cython`_ before running the tests.
 As this generates no coverage, and includes a completely different
 execution, its worth checking both.
 
+There's also a ``tox`` configuration, and I'm largely relying on `Travis`_ for
+checking all the build matrix.
+
 The license
 -----------
 
@@ -73,3 +100,8 @@ It's the `FreeBSD`_. There's should be a ``LICENSE`` file in the root of the rep
 .. _GitHub: https://github.com/kezabelle/wsgi-detour
 .. _Cython: http://cython.readthedocs.io/
 .. _Django: http://djangoproject.com/
+.. _selector: https://github.com/lukearno/selector
+.. _wsgirewrite: https://bitbucket.org/robertodealmeida/wsgirewrite
+.. _urlrelay: https://bitbucket.org/lcrees/urlrelay/src
+.. _werkzeug.DispatcherMiddleware: http://werkzeug.pocoo.org/docs/0.11/middlewares/#werkzeug.wsgi.DispatcherMiddleware
+.. _Travis: https://travis-ci.org/
