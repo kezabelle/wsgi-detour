@@ -32,12 +32,12 @@ What's so special about it?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Nothing, really. It comes with pre-cythonized C output, for building an
-extension module ... so maybe it'll not-slow?
+extension module ... so maybe it'll be ... not-slow?
 
 Why I wrote it
 ^^^^^^^^^^^^^^
 
-I have `Django`_ application and I have a new part to add which ostensibly could
+I have a `Django`_ application and I have a new part to add which ostensibly could
 be a separate microservice, but the easiest way to weld that microservice into
 the monolith is to keep the ecosystem pretending it's not separate.
 
@@ -95,7 +95,7 @@ It'll prompt you to ``pip install`` any missing requirements. Thereafter, that
 should start a WSGI application listening on ``0.0.0.0:8080`` using the
 built in ``wsgiref`` package.
 You can also test it using `waitress`_ or `meinheld`_
-by passing the long-opt flag ``--wsgi`` or the short-opt flag ``-w` like so::
+by passing the long-opt flag ``--wsgi`` or the short-opt flag ``-w`` like so::
 
     ./demo_project.py --wsgi="meinheld"
     ./demo_project.py -wmeinheld
