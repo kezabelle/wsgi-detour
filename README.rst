@@ -4,12 +4,6 @@ wsgi-detour
 :author: Keryn Knight
 :version: 0.1.0
 
-Installation instructions
--------------------------
-
-Currently you need to clone it from `GitHub`_ because I have little idea
-about how well it works, or if it works at all (though the tests should pass...)
-
 .. |travis_master| image:: https://travis-ci.org/kezabelle/wsgi-detour.svg?branch=master
   :target: https://travis-ci.org/kezabelle/wsgi-detour
 
@@ -19,6 +13,8 @@ Release         Status
 master          |travis_master|
 ==============  ======
 
+.. contents:: Sections
+   :depth: 2
 
 What it is
 ----------
@@ -33,13 +29,13 @@ which in my use-case is probably `Django`_ ... which I know is kind of
 a niche requirement.
 
 What's so special about it?
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Nothing, really. It comes with pre-cythonized C output, for building an
 extension module ... so maybe it'll not-slow?
 
 Why I wrote it
---------------
+^^^^^^^^^^^^^^
 
 I have `Django`_ application and I have a new part to add which ostensibly could
 be a separate microservice, but the easiest way to weld that microservice into
@@ -49,8 +45,20 @@ This means wrapping the existing `Django`_ ``WSGI`` ``application`` object
 so that auto-reloading works with the new separate app, and avoids needing
 to configure the production HTTPd to add additional mount points.
 
-Usage
------
+
+Installation and usage
+----------------------
+
+How to install
+^^^^^^^^^^^^^^
+
+Currently you need to clone it from `GitHub`_ because I have little idea
+about how well it works, or if it works at all (though the tests should pass...) ::
+
+    pip install -e git+https://github.com/kezabelle/wsgi-detour.git#egg=wsgi-detour
+
+Basic usage
+^^^^^^^^^^^
 
 Whilst it works with any WSGI application (I think), I wrote it to
 scratch a specific itch where I wanted an app which ostensibly could
@@ -66,19 +74,8 @@ So here's an example of that::
         ('/some/other/wsgi', MyBottleApp),
     ))
 
-Any alternatives?
------------------
-
-Yes, plenty. But why use something when I could re-invent the wheel like a
-chump? Betting on werkzeug seems like an obvious choice, otherwise.
-
-* `selector`_ - WSGI request delegation. (AKA routing.)
-* `wsgirewrite`_ - an implementation of a mod_rewrite compatible URL rewriter
-* `urlrelay`_ - passes HTTP requests to a WSGI application based on a matching regular expression..
-* `werkzeug.DispatcherMiddleware`_ - combine multiple WSGI applications
-
 Running the demo
-----------------
+^^^^^^^^^^^^^^^^
 
 You can run an example project by doing the following. It assumes you're
 using something like `virtualenv`_ and `virtualenvwrapper`_ but you can probably
@@ -87,10 +84,12 @@ figure it out otherwise::
     mktmpenv --python=`which python3`
     pip install -e git+https://github.com/kezabelle/wsgi-detour.git#egg=wsgi-detour
 
+
 Then probably::
 
     cd src/wsgi-detour
     ./demo_project.py
+
 
 It'll prompt you to ``pip install`` any missing requirements. Thereafter, that
 should start a WSGI application listening on ``0.0.0.0:8080`` using the
@@ -101,16 +100,18 @@ by passing the long-opt flag ``--wsgi`` or the short-opt flag ``-w` like so::
     ./demo_project.py --wsgi="meinheld"
     ./demo_project.py -wmeinheld
 
+
 Lastly, you can run it using `gunicorn`_ like so::
 
     gunicorn demo_project
+
 
 The test project shows the mounting of a `Django`_ project and a `bottle`_ app.
 In theory those WSGI publishing options should provide some confidence that it
 works. **YMMV**.
 
 Running the tests
------------------
+^^^^^^^^^^^^^^^^^
 
 Quick and dirty, with coverage::
 
@@ -123,6 +124,17 @@ execution, its worth checking both.
 
 There's also a ``tox`` configuration, and I'm largely relying on `Travis`_ for
 checking all the build matrix.
+
+Any alternatives?
+-----------------
+
+Yes, plenty. But why use something when I could re-invent the wheel like a
+chump? Betting on werkzeug seems like an obvious choice, otherwise.
+
+* `selector`_ - WSGI request delegation. (AKA routing.)
+* `wsgirewrite`_ - an implementation of a mod_rewrite compatible URL rewriter
+* `urlrelay`_ - passes HTTP requests to a WSGI application based on a matching regular expression..
+* `werkzeug.DispatcherMiddleware`_ - combine multiple WSGI applications
 
 The license
 -----------
