@@ -28,7 +28,8 @@ based on their path prefix.
 
 Given a standard ``WSGI`` application mounted at ``/``, Detour makes it
 possible to re-route requests for, say, ``/my-awesome-app/`` to a different
-WSGI app before they ever get to `Django`_ ... which I know is kind of
+WSGI app before they ever get to the original *fallback* ``WSGI`` application,
+which in my use-case is probably `Django`_ ... which I know is kind of
 a niche requirement.
 
 What's so special about it?
@@ -76,6 +77,38 @@ chump? Betting on werkzeug seems like an obvious choice, otherwise.
 * `urlrelay`_ - passes HTTP requests to a WSGI application based on a matching regular expression..
 * `werkzeug.DispatcherMiddleware`_ - combine multiple WSGI applications
 
+Running the demo
+----------------
+
+You can run an example project by doing the following. It assumes you're
+using something like `virtualenv`_ and `virtualenvwrapper`_ but you can probably
+figure it out otherwise::
+
+    mktmpenv --python=`which python3`
+    pip install -e git+https://github.com/kezabelle/wsgi-detour.git#egg=wsgi-detour
+
+Then probably::
+
+    cd src/wsgi-detour
+    ./demo_project.py
+
+It'll prompt you to ``pip install`` any missing requirements. Thereafter, that
+should start a WSGI application listening on ``0.0.0.0:8080`` using the
+built in ``wsgiref`` package.
+You can also test it using `waitress`_ or `meinheld`_
+by passing the long-opt flag ``--wsgi`` or the short-opt flag ``-w` like so::
+
+    ./demo_project.py --wsgi="meinheld"
+    ./demo_project.py -wmeinheld
+
+Lastly, you can run it using `gunicorn`_ like so::
+
+    gunicorn demo_project
+
+The test project shows the mounting of a `Django`_ project and a `bottle`_ app.
+In theory those WSGI publishing options should provide some confidence that it
+works. **YMMV**.
+
 Running the tests
 -----------------
 
@@ -105,3 +138,9 @@ It's the `FreeBSD`_. There's should be a ``LICENSE`` file in the root of the rep
 .. _urlrelay: https://bitbucket.org/lcrees/urlrelay/src
 .. _werkzeug.DispatcherMiddleware: http://werkzeug.pocoo.org/docs/0.11/middlewares/#werkzeug.wsgi.DispatcherMiddleware
 .. _Travis: https://travis-ci.org/
+.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _virtualenv: https://virtualenv.pypa.io/en/stable/
+.. _waitress: http://docs.pylonsproject.org/projects/waitress/en/latest/
+.. _meinheld: http://meinheld.org/
+.. _bottle: https://bottlepy.org/
+.. _gunicorn: http://gunicorn.org/
