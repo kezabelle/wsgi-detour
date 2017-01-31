@@ -1,0 +1,73 @@
+# prospector[with_dodgy,with_frosted,with_mccabe,with_pep257,with_pep8,with_pyroma,with_vulture]
+inherits:
+  - strictness_veryhigh
+
+ignore-patterns:
+  - ^bin/.+$
+  - ^build/.+$
+  - ^docs/.+$
+  - ^dist/.+$
+  - ^include/.+$
+  - ^lib/.+$
+  - ^.tox/.+$
+  - ^share/.+$
+
+test-warnings: false
+
+output-format: grouped
+
+dodgy:
+    # Looks at Python code to search for things which look "dodgy"
+    # such as passwords or git conflict artifacts
+    run: true
+
+frosted:
+    # static analysis
+    run: true
+
+mccabe:
+    # complexity checking.
+    run: true
+
+pep257:
+    # docstring checking
+    run: true
+
+pep8:
+    # style checking
+    run: true
+    options:
+        max-line-length: 90
+
+pyflakes:
+    # preferring 'frosted' instead (a fork of)
+    run: false
+
+pylint:
+    # static analysis and then some
+    run: true
+    options:
+        max-line-length: 90
+        # pytest module has dynamically assigned functions,
+        # raising errors such as: E1101: Module 'pytest' has
+        # no 'mark' member
+        ignored-classes: pytest
+    disable:
+        # Too many lines in module
+        - C0302
+        # Used * or ** magic
+        - W0142
+        # Used builtin function 'filter'.
+        # (For maintainability, one should prefer list comprehension.)
+        - W0141
+
+pyroma:
+    # checks setup.py
+    # for some reason I'm seeing lines like
+    # lib/python2.7/site-packages/pyroma/testdata/minimal/setup.py
+    # being caught ...
+    run: false
+
+vulture:
+    # this tool does a good job of finding unused code.
+    run: true

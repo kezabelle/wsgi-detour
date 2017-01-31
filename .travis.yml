@@ -26,3 +26,8 @@ env:
   - TOX_ENV=py33-purepy
   - TOX_ENV=py35-purepy
   - TOX_ENV=pypy
+  - TOX_ENV=prospector
+
+matrix:
+  allow_failures:
+  - env: TOXENV=prospector
