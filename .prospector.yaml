@@ -38,6 +38,9 @@ pep8:
     run: true
     options:
         max-line-length: 90
+    disable:
+      - E265  # block comment for cython
+      - E261  # type hints
 
 pyflakes:
     # preferring 'frosted' instead (a fork of)
